@@ -1,2 +1,3 @@
-# myMemos
-A mobile app designed to manage your notes
+# :notebook: myMemos
+
+:sparkles: A mobile app designed to manage your notes
