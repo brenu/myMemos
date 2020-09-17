@@ -1,13 +1,20 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { RectButton } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 
-function Landing() {
+export default function Landing() {
+  const navigation = useNavigation();
+
+  function handleNavigation() {
+    navigation.navigate("Main");
+  }
+
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>myMemos</Text>
-      <RectButton style={styles.btn}>
+      <RectButton style={styles.btn} onPress={handleNavigation}>
         <Feather name="edit" size={30} color="#fff" />
       </RectButton>
     </View>
@@ -15,6 +22,12 @@ function Landing() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   title: {
     fontSize: 40,
     fontWeight: "bold",
@@ -31,5 +44,3 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
 });
-
-export default Landing;
