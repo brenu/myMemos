@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function Main() {
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    async function handleInit() {
+      setCards([
+        {
+          title: "Sample title here",
+          content:
+            "O leão-marinho é um mamífero semiaquático, de que há várias espécies, da subfamília Otariinae da família Otariidae, que vive em regiões de baixas temperaturas e alimenta-se principalmente de peixes (como o cherne e o arenque) e de moluscos.",
+        },
+      ]);
+    }
+
+    handleInit();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Texto de teste aqui</Text>
-        <Text style={styles.cardContent}>
-          O leão-marinho é um mamífero semiaquático, de que há várias espécies,
-          da subfamília Otariinae da família Otariidae, que vive em regiões de
-          baixas temperaturas e alimenta-se principalmente de peixes (como o
-          cherne e o arenque) e de moluscos.
-        </Text>
-      </View>
+      {cards.map((card, index) => (
+        <View key={index} style={styles.card}>
+          <Text style={styles.cardTitle}>{card.title}</Text>
+          <Text style={styles.cardContent}>{card.content}</Text>
+        </View>
+      ))}
     </View>
   );
 }
