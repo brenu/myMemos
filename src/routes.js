@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import Landing from "./pages/Landing";
 import Main from "./pages/Main";
+import Editor from "./pages/Editor";
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,7 @@ export default function Routes() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Landing" component={Landing} />
         <Stack.Screen name="Main" component={Main} />
+        <Stack.Screen name="Editor" component={Editor} />
       </Stack.Navigator>
     </NavigationContainer>
   );

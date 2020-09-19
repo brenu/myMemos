@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 export default function Main() {
   const [cards, setCards] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     async function handleInit() {
@@ -18,13 +21,21 @@ export default function Main() {
     handleInit();
   }, []);
 
+  function handleEdit() {
+    navigation.navigate("Editor");
+  }
+
   return (
     <View style={styles.container}>
       {cards.map((card, index) => (
-        <View key={index} style={styles.card}>
+        <TouchableWithoutFeedback
+          key={index}
+          style={styles.card}
+          onPress={handleEdit}
+        >
           <Text style={styles.cardTitle}>{card.title}</Text>
           <Text style={styles.cardContent}>{card.content}</Text>
-        </View>
+        </TouchableWithoutFeedback>
       ))}
     </View>
   );
