@@ -4,10 +4,10 @@ import { AsyncStorage, StyleSheet, Text, View } from "react-native";
 import { RectButton, TextInput } from "react-native-gesture-handler";
 
 export default function Editor() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [memos, setMemos] = useState([]);
 
   const route = useRoute();
+  const index = route.params.index;
 
   useEffect(() => {
     async function handleInit() {
@@ -15,8 +15,7 @@ export default function Editor() {
         let memosArray = await AsyncStorage.getItem("memos");
         memosArray = JSON.parse(memosArray);
 
-        setTitle(memosArray[route.params.index].title);
-        setContent(memosArray[route.params.index].content);
+        setMemos(memosArray);
       }
     }
 
@@ -24,7 +23,9 @@ export default function Editor() {
   }, []);
 
   async function handleEdit() {
-    console.log("Editou!");
+    await AsyncStorage.setItem("memos", JSON.stringify(memos));
+
+    console.log(memos);
   }
 
   return (
@@ -35,8 +36,14 @@ export default function Editor() {
         autoCorrect={false}
         placeholder="Título"
         placeholderTextColor="#ccc"
-        value={title}
-        onChangeText={setTitle}
+        value={memos.length > 0 ? memos[index].title : null}
+        onChangeText={(event) => {
+          setMemos(
+            memos.map((memo, memoIndex) =>
+              memoIndex === index ? { ...memo, title: event } : memo
+            )
+          );
+        }}
       />
       <TextInput
         style={styles.longInput}
@@ -45,8 +52,14 @@ export default function Editor() {
         placeholder="Mensagem"
         multiline={true}
         placeholderTextColor="#ccc"
-        value={content}
-        onChangeText={setContent}
+        value={memos.length > 0 ? memos[index].content : null}
+        onChangeText={(event) => {
+          setMemos(
+            memos.map((memo, memoIndex) =>
+              memoIndex === index ? { ...memo, content: event } : memo
+            )
+          );
+        }}
       />
       <RectButton style={styles.btn} onPress={handleEdit}>
         <Text style={styles.btnText}>Editar</Text>
@@ -64,7 +77,7 @@ const styles = StyleSheet.create({
   },
   input: {
     alignSelf: "stretch",
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#eee",
     borderBottomWidth: 1,
     padding: 5,
     backgroundColor: "#fff",
