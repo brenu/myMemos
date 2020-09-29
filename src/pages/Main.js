@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { AsyncStorage, StyleSheet, Text, View } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 export default function Main() {
@@ -9,34 +9,52 @@ export default function Main() {
 
   useEffect(() => {
     async function handleInit() {
-      setCards([
+      await AsyncStorage.removeItem("memos");
+
+      const parsedData = JSON.stringify([
         {
           title: "Sample title here",
           content:
             "O leão-marinho é um mamífero semiaquático, de que há várias espécies, da subfamília Otariinae da família Otariidae, que vive em regiões de baixas temperaturas e alimenta-se principalmente de peixes (como o cherne e o arenque) e de moluscos.",
         },
       ]);
+      await AsyncStorage.setItem("memos", parsedData);
     }
 
     handleInit();
   }, []);
 
-  function handleEdit() {
-    navigation.navigate("Editor");
+  useFocusEffect(() => {
+    async function handleUpdateMemos() {
+      let memos = await AsyncStorage.getItem("memos");
+
+      if (memos) {
+        memos = JSON.parse(memos);
+      }
+
+      setCards(memos);
+    }
+
+    handleUpdateMemos();
+  }, []);
+
+  function handleEdit(index) {
+    navigation.navigate("Editor", { index });
   }
 
   return (
     <View style={styles.container}>
-      {cards.map((card, index) => (
-        <TouchableWithoutFeedback
-          key={index}
-          style={styles.card}
-          onPress={handleEdit}
-        >
-          <Text style={styles.cardTitle}>{card.title}</Text>
-          <Text style={styles.cardContent}>{card.content}</Text>
-        </TouchableWithoutFeedback>
-      ))}
+      {cards &&
+        cards.map((card, index) => (
+          <TouchableWithoutFeedback
+            key={index}
+            style={styles.card}
+            onPress={() => handleEdit(index)}
+          >
+            <Text style={styles.cardTitle}>{card.title}</Text>
+            <Text style={styles.cardContent}>{card.content}</Text>
+          </TouchableWithoutFeedback>
+        ))}
     </View>
   );
 }

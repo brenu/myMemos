@@ -1,10 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
+import { AsyncStorage, StyleSheet, Text, View } from "react-native";
 import { RectButton, TextInput } from "react-native-gesture-handler";
 
 export default function Editor() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
+  const route = useRoute();
+
+  useEffect(() => {
+    async function handleInit() {
+      if (route.params) {
+        let memosArray = await AsyncStorage.getItem("memos");
+        memosArray = JSON.parse(memosArray);
+
+        setTitle(memosArray[route.params.index].title);
+        setContent(memosArray[route.params.index].content);
+      }
+    }
+
+    handleInit();
+  }, []);
+
+  async function handleEdit() {
+    console.log("Editou!");
+  }
 
   return (
     <View style={styles.container}>
@@ -27,7 +48,7 @@ export default function Editor() {
         value={content}
         onChangeText={setContent}
       />
-      <RectButton style={styles.btn}>
+      <RectButton style={styles.btn} onPress={handleEdit}>
         <Text style={styles.btnText}>Editar</Text>
       </RectButton>
     </View>
