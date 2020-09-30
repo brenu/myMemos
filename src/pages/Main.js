@@ -1,28 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { AsyncStorage, StyleSheet, Text, View } from "react-native";
+import { AsyncStorage, StatusBar, StyleSheet, Text, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Main() {
   const [cards, setCards] = useState([]);
   const navigation = useNavigation();
-
-  useEffect(() => {
-    async function handleInit() {
-      await AsyncStorage.removeItem("memos");
-
-      const parsedData = JSON.stringify([
-        {
-          title: "Sample title here",
-          content:
-            "O leão-marinho é um mamífero semiaquático, de que há várias espécies, da subfamília Otariinae da família Otariidae, que vive em regiões de baixas temperaturas e alimenta-se principalmente de peixes (como o cherne e o arenque) e de moluscos.",
-        },
-      ]);
-      await AsyncStorage.setItem("memos", parsedData);
-    }
-
-    handleInit();
-  }, []);
 
   useFocusEffect(() => {
     async function handleUpdateMemos() {
@@ -44,17 +31,24 @@ export default function Main() {
 
   return (
     <View style={styles.container}>
-      {cards &&
-        cards.map((card, index) => (
-          <TouchableWithoutFeedback
-            key={index}
-            style={styles.card}
-            onPress={() => handleEdit(index)}
-          >
-            <Text style={styles.cardTitle}>{card.title}</Text>
-            <Text style={styles.cardContent}>{card.content}</Text>
-          </TouchableWithoutFeedback>
-        ))}
+      <View style={styles.header}>
+        <TouchableOpacity>
+          <FontAwesome5 name="plus" size={25} color="#fff" />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.content}>
+        {cards &&
+          cards.map((card, index) => (
+            <TouchableWithoutFeedback
+              key={index}
+              style={styles.card}
+              onPress={() => handleEdit(index)}
+            >
+              <Text style={styles.cardTitle}>{card.title}</Text>
+              <Text style={styles.cardContent}>{card.content}</Text>
+            </TouchableWithoutFeedback>
+          ))}
+      </View>
     </View>
   );
 }
@@ -64,7 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#7ec0ee",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     paddingHorizontal: 30,
   },
   card: {
@@ -85,5 +79,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 14,
     color: "#777",
+  },
+  header: {
+    alignSelf: "stretch",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    marginTop: StatusBar.currentHeight + 1,
+    paddingVertical: 10,
+  },
+  content: {
+    flex: 1,
+    justifyContent: "center",
   },
 });

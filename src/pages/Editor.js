@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import { AsyncStorage, StyleSheet, Text, View } from "react-native";
 import { RectButton, TextInput } from "react-native-gesture-handler";
 
 export default function Editor() {
   const [memos, setMemos] = useState([]);
 
+  const navigation = useNavigation();
   const route = useRoute();
   const index = route.params.index;
 
@@ -25,7 +26,7 @@ export default function Editor() {
   async function handleEdit() {
     await AsyncStorage.setItem("memos", JSON.stringify(memos));
 
-    console.log(memos);
+    navigation.goBack();
   }
 
   return (
