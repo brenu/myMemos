@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AsyncStorage, StatusBar, StyleSheet, Text, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import {
+  ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
@@ -40,7 +41,10 @@ export default function Main() {
           <FontAwesome5 name="plus" size={25} color="#fff" />
         </TouchableOpacity>
       </View>
-      <View style={styles.content}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
         {cards &&
           cards.map((card, index) => (
             <TouchableWithoutFeedback
@@ -52,7 +56,7 @@ export default function Main() {
               <Text style={styles.cardContent}>{card.content}</Text>
             </TouchableWithoutFeedback>
           ))}
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -61,9 +65,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#7ec0ee",
-    alignItems: "center",
     justifyContent: "flex-start",
-    paddingHorizontal: 30,
+  },
+  header: {
+    alignSelf: "stretch",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    marginTop: StatusBar.currentHeight + 1,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  content: {
+    alignSelf: "stretch",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 30,
   },
   card: {
     alignSelf: "stretch",
@@ -84,16 +101,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 14,
     color: "#777",
-  },
-  header: {
-    alignSelf: "stretch",
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-    marginTop: StatusBar.currentHeight + 1,
-    paddingVertical: 10,
-  },
-  content: {
-    flex: 1,
-    justifyContent: "center",
   },
 });
