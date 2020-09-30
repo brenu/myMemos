@@ -25,6 +25,10 @@ export default function Main() {
     handleUpdateMemos();
   }, []);
 
+  function handleNewMemo() {
+    navigation.navigate("NewMemo");
+  }
+
   function handleEdit(index) {
     navigation.navigate("Editor", { index });
   }
@@ -32,7 +36,7 @@ export default function Main() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleNewMemo}>
           <FontAwesome5 name="plus" size={25} color="#fff" />
         </TouchableOpacity>
       </View>
@@ -69,6 +73,7 @@ const styles = StyleSheet.create({
     padding: 30,
     borderRadius: 5,
     elevation: 5,
+    marginBottom: 5,
   },
   cardTitle: {
     fontSize: 16,
