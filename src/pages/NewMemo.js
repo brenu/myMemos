@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { AsyncStorage, StyleSheet, Text, View } from "react-native";
-import { RectButton, TextInput } from "react-native-gesture-handler";
+import { AsyncStorage, StatusBar, StyleSheet, Text, View } from "react-native";
+import {
+  RectButton,
+  TextInput,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
+
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function NewMemo() {
   const [memos, setMemos] = useState([]);
@@ -29,6 +35,10 @@ export default function NewMemo() {
     handleInit();
   }, []);
 
+  async function handleGoBack() {
+    navigation.goBack();
+  }
+
   async function handleSubmit() {
     await AsyncStorage.setItem("memos", JSON.stringify(memos));
 
@@ -37,40 +47,49 @@ export default function NewMemo() {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        autoCapitalize="words"
-        autoCorrect={false}
-        placeholder="Título"
-        placeholderTextColor="#ccc"
-        value={memosLength > 0 ? memos[memosLength - 1].title : null}
-        onChangeText={(event) => {
-          setMemos(
-            memos.map((memo, memoIndex) =>
-              memoIndex === memosLength - 1 ? { ...memo, title: event } : memo
-            )
-          );
-        }}
-      />
-      <TextInput
-        style={styles.longInput}
-        autoCapitalize="words"
-        autoCorrect={false}
-        placeholder="Mensagem"
-        multiline={true}
-        placeholderTextColor="#ccc"
-        value={memosLength > 0 ? memos[memosLength - 1].content : null}
-        onChangeText={(event) => {
-          setMemos(
-            memos.map((memo, memoIndex) =>
-              memoIndex === memosLength - 1 ? { ...memo, content: event } : memo
-            )
-          );
-        }}
-      />
-      <RectButton style={styles.btn} onPress={handleSubmit}>
-        <Text style={styles.btnText}>Criar Nota</Text>
-      </RectButton>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={handleGoBack}>
+          <FontAwesome5 name="arrow-left" size={25} color="#7ec0ee" />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.content}>
+        <TextInput
+          style={styles.input}
+          autoCapitalize="words"
+          autoCorrect={false}
+          placeholder="Título"
+          placeholderTextColor="#ccc"
+          value={memosLength > 0 ? memos[memosLength - 1].title : null}
+          onChangeText={(event) => {
+            setMemos(
+              memos.map((memo, memoIndex) =>
+                memoIndex === memosLength - 1 ? { ...memo, title: event } : memo
+              )
+            );
+          }}
+        />
+        <TextInput
+          style={styles.longInput}
+          autoCapitalize="words"
+          autoCorrect={false}
+          placeholder="Mensagem"
+          multiline={true}
+          placeholderTextColor="#ccc"
+          value={memosLength > 0 ? memos[memosLength - 1].content : null}
+          onChangeText={(event) => {
+            setMemos(
+              memos.map((memo, memoIndex) =>
+                memoIndex === memosLength - 1
+                  ? { ...memo, content: event }
+                  : memo
+              )
+            );
+          }}
+        />
+        <RectButton style={styles.btn} onPress={handleSubmit}>
+          <Text style={styles.btnText}>Criar Nota</Text>
+        </RectButton>
+      </View>
     </View>
   );
 }
@@ -79,8 +98,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 30,
+  },
+  header: {
+    alignSelf: "stretch",
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
+    marginTop: StatusBar.currentHeight + 1,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  content: {
+    flex: 1,
+    alignSelf: "stretch",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 30,
   },
   input: {
     alignSelf: "stretch",
