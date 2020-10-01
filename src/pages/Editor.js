@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { RectButton, TextInput } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons';
+
 
 export default function Editor() {
   const [memos, setMemos] = useState([]);
@@ -38,6 +40,10 @@ export default function Editor() {
     navigation.goBack();
   }
 
+  async function handleGoBack() {
+    navigation.goBack();
+  }
+
   async function handleEdit() {
     await AsyncStorage.setItem("memos", JSON.stringify(memos));
 
@@ -47,6 +53,9 @@ export default function Editor() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+      <TouchableOpacity onPress={handleCancel}>
+        <AntDesign name="left" size={25} color="#7ec0ee" />
+      </TouchableOpacity>
         <TouchableOpacity onPress={handleCancel}>
           <FontAwesome5 name="times" size={25} color="#7ec0ee" />
         </TouchableOpacity>
@@ -97,8 +106,9 @@ const styles = StyleSheet.create({
   },
   header: {
     alignSelf: "stretch",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     alignItems: "flex-start",
+    flexDirection: "row-reverse",
     marginTop: StatusBar.currentHeight + 1,
     paddingVertical: 10,
     paddingHorizontal: 20,
