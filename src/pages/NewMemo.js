@@ -12,9 +12,15 @@ export default function NewMemo() {
   useEffect(() => {
     async function handleInit() {
       let memosArray = await AsyncStorage.getItem("memos");
-      memosArray = JSON.parse(memosArray);
 
-      memosArray.push({ title: "", content: "" });
+      if (memosArray) {
+        memosArray = JSON.parse(memosArray);
+
+        memosArray.push({ title: "", content: "" });
+      } else {
+        memosArray = [];
+        memosArray.push({ title: "", content: "" });
+      }
 
       setMemos(memosArray);
       setMemosLength(Number(memosArray.length));

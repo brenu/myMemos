@@ -14,9 +14,12 @@ export default function Editor() {
     async function handleInit() {
       if (route.params) {
         let memosArray = await AsyncStorage.getItem("memos");
-        memosArray = JSON.parse(memosArray);
 
-        setMemos(memosArray);
+        if (memosArray) {
+          memosArray = JSON.parse(memosArray);
+
+          setMemos(memosArray);
+        }
       }
     }
 

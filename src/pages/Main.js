@@ -18,13 +18,12 @@ export default function Main() {
 
       if (memos) {
         memos = JSON.parse(memos);
+        setCards(memos);
       }
-
-      setCards(memos);
     }
 
     handleUpdateMemos();
-  }, []);
+  });
 
   function handleNewMemo() {
     navigation.navigate("NewMemo");
@@ -41,12 +40,12 @@ export default function Main() {
           <FontAwesome5 name="plus" size={25} color="#fff" />
         </TouchableOpacity>
       </View>
-      <ScrollView
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
-        {cards &&
-          cards.map((card, index) => (
+      {cards.length > 0 ? (
+        <ScrollView
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+        >
+          {cards.map((card, index) => (
             <TouchableWithoutFeedback
               key={index}
               style={styles.card}
@@ -56,7 +55,10 @@ export default function Main() {
               <Text style={styles.cardContent}>{card.content}</Text>
             </TouchableWithoutFeedback>
           ))}
-      </ScrollView>
+        </ScrollView>
+      ) : (
+        <Text style={styles.noContentText}>Crie uma nota :)</Text>
+      )}
     </View>
   );
 }
@@ -101,5 +103,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 14,
     color: "#777",
+  },
+  noContentText: {
+    flex: 1,
+    alignSelf: "center",
+    textAlignVertical: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
   },
 });
