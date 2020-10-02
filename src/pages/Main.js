@@ -10,6 +10,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Main() {
   const [cards, setCards] = useState([]);
+  const [showOptions, setShowOptions] = useState(false);
   const navigation = useNavigation();
 
   useFocusEffect(() => {
@@ -33,9 +34,27 @@ export default function Main() {
     navigation.navigate("Editor", { index });
   }
 
+  function handleOptions(option) {
+    console.log(option);
+
+    setShowOptions(true);
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      {showOptions && (
+        <View style={styles.options}>
+          <TouchableOpacity
+            onPress={() => setShowOptions((showOptions) => !showOptions)}
+          >
+            <FontAwesome5 name="times" size={25} color="#fff" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => console.log("Deleted!")}>
+            <FontAwesome5 name="trash" size={25} color="#fff" />
+          </TouchableOpacity>
+        </View>
+      )}
+      <View style={showOptions ? styles.headerForOptions : styles.header}>
         <TouchableOpacity onPress={handleNewMemo}>
           <FontAwesome5 name="plus" size={25} color="#fff" />
         </TouchableOpacity>
@@ -50,6 +69,7 @@ export default function Main() {
               key={index}
               style={styles.card}
               onPress={() => handleEdit(index)}
+              onLongPress={() => handleOptions(index)}
             >
               <Text style={styles.cardTitle}>{card.title}</Text>
               <Text style={styles.cardContent}>{card.content}</Text>
@@ -69,11 +89,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#7ec0ee",
     justifyContent: "flex-start",
   },
+  options: {
+    alignSelf: "stretch",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    backgroundColor: "#ffffff44",
+    paddingVertical: 10,
+    paddingTop: StatusBar.currentHeight + 1,
+    paddingHorizontal: 20,
+  },
   header: {
     alignSelf: "stretch",
     justifyContent: "flex-end",
     alignItems: "flex-end",
-    marginTop: StatusBar.currentHeight + 1,
+    marginTop: StatusBar.currentHeight,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  headerForOptions: {
+    alignSelf: "stretch",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
