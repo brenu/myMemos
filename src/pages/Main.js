@@ -9,17 +9,18 @@ import {
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Main() {
-  const [cards, setCards] = useState([]);
+  const [memos, setMemos] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
+  const [selectedMemo, setSelectedMemo] = useState(0);
   const navigation = useNavigation();
 
   useFocusEffect(() => {
     async function handleUpdateMemos() {
-      let memos = await AsyncStorage.getItem("memos");
+      let temporaryMemos = await AsyncStorage.getItem("memos");
 
-      if (memos) {
-        memos = JSON.parse(memos);
-        setCards(memos);
+      if (temporaryMemos) {
+        temporaryMemos = JSON.parse(temporaryMemos);
+        setMemos(temporaryMemos);
       }
     }
 
@@ -34,9 +35,23 @@ export default function Main() {
     navigation.navigate("Editor", { index });
   }
 
-  function handleOptions(option) {
-    console.log(option);
+  async function handleDelete() {
+    const newArray = [];
+    const index = selectedMemo;
+    Promise.all(
+      memos.map((memo, memoIndex) => {
+        if (memoIndex !== index) {
+          newArray.push(memo);
+        }
+      })
+    );
 
+    await AsyncStorage.setItem("memos", JSON.stringify(newArray));
+    setShowOptions(false);
+  }
+
+  function handleOptions(index) {
+    setSelectedMemo(index);
     setShowOptions(true);
   }
 
@@ -49,7 +64,7 @@ export default function Main() {
           >
             <FontAwesome5 name="times" size={25} color="#fff" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log("Deleted!")}>
+          <TouchableOpacity onPress={handleDelete}>
             <FontAwesome5 name="trash" size={25} color="#fff" />
           </TouchableOpacity>
         </View>
@@ -59,12 +74,12 @@ export default function Main() {
           <FontAwesome5 name="plus" size={25} color="#fff" />
         </TouchableOpacity>
       </View>
-      {cards.length > 0 ? (
+      {memos.length > 0 ? (
         <ScrollView
           contentContainerStyle={styles.content}
           showsVerticalScrollIndicator={false}
         >
-          {cards.map((card, index) => (
+          {memos.map((card, index) => (
             <TouchableWithoutFeedback
               key={index}
               style={styles.card}
