@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { AsyncStorage, StatusBar, StyleSheet, Text, View } from "react-native";
+import {
+  Animated,
+  AsyncStorage,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import {
+  RectButton,
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import { FontAwesome5 } from "@expo/vector-icons";
+import OptionsView from "../components/Options";
 
 export default function Main() {
   const [memos, setMemos] = useState([]);
@@ -58,7 +67,7 @@ export default function Main() {
   return (
     <View style={styles.container}>
       {showOptions && (
-        <View style={styles.options}>
+        <OptionsView>
           <TouchableOpacity
             onPress={() => setShowOptions((showOptions) => !showOptions)}
           >
@@ -67,7 +76,7 @@ export default function Main() {
           <TouchableOpacity onPress={handleDelete}>
             <FontAwesome5 name="trash" size={25} color="#fff" />
           </TouchableOpacity>
-        </View>
+        </OptionsView>
       )}
       <View style={showOptions ? styles.headerForOptions : styles.header}>
         <TouchableOpacity onPress={handleNewMemo}>
@@ -82,12 +91,13 @@ export default function Main() {
           {memos.map((card, index) => (
             <TouchableWithoutFeedback
               key={index}
-              style={styles.card}
               onPress={() => handleEdit(index)}
               onLongPress={() => handleOptions(index)}
             >
-              <Text style={styles.cardTitle}>{card.title}</Text>
-              <Text style={styles.cardContent}>{card.content}</Text>
+              <RectButton style={styles.card}>
+                <Text style={styles.cardTitle}>{card.title}</Text>
+                <Text style={styles.cardContent}>{card.content}</Text>
+              </RectButton>
             </TouchableWithoutFeedback>
           ))}
         </ScrollView>
@@ -103,16 +113,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#7ec0ee",
     justifyContent: "flex-start",
-  },
-  options: {
-    alignSelf: "stretch",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-end",
-    backgroundColor: "#ffffff44",
-    paddingVertical: 10,
-    paddingTop: StatusBar.currentHeight + 1,
-    paddingHorizontal: 20,
   },
   header: {
     alignSelf: "stretch",
