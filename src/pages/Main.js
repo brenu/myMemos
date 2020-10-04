@@ -85,8 +85,8 @@ export default function Main() {
       </View>
       {memos.length > 0 ? (
         <ScrollView
-          contentContainerStyle={styles.content}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.content}
         >
           {memos.map((card, index) => (
             <TouchableWithoutFeedback
@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
   content: {
     alignSelf: "stretch",
     justifyContent: "center",
-    paddingHorizontal: 20,
     paddingTop: 10,
     paddingBottom: 30,
   },
@@ -141,9 +140,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "#fff",
     justifyContent: "flex-start",
+    marginHorizontal: 20,
     padding: 30,
     borderRadius: 5,
-    elevation: 5,
+    elevation: 2,
     marginBottom: 5,
   },
   cardTitle: {

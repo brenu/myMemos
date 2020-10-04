@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 5,
     backgroundColor: "#7ec0ee",
-    elevation: 5,
+    borderRadius: 2,
   },
   btnText: {
     fontSize: 16,
