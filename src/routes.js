@@ -6,6 +6,7 @@ import Landing from "./pages/Landing";
 import Main from "./pages/Main";
 import Editor from "./pages/Editor";
 import NewMemo from "./pages/NewMemo";
+import Settings from "./pages/Settings";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ export default function Routes() {
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="NewMemo" component={NewMemo} />
         <Stack.Screen name="Editor" component={Editor} />
+        <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   );

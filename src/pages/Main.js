@@ -36,8 +36,17 @@ export default function Main() {
     handleUpdateMemos();
   });
 
-  function handleNewMemo() {
-    navigation.navigate("NewMemo");
+  function handleNavigation(option) {
+    switch (option) {
+      case 1:
+        navigation.navigate("Settings");
+        break;
+      case 2:
+        navigation.navigate("NewMemo");
+        break;
+      default:
+        break;
+    }
   }
 
   function handleEdit(index) {
@@ -78,8 +87,13 @@ export default function Main() {
           </TouchableOpacity>
         </OptionsView>
       )}
-      <View style={showOptions ? styles.headerForOptions : styles.header}>
-        <TouchableOpacity onPress={handleNewMemo}>
+      <View
+        style={[styles.header, showOptions ? styles.headerForOptions : null]}
+      >
+        <TouchableOpacity onPress={() => handleNavigation(1)}>
+          <FontAwesome5 name="cog" size={25} color="#fff" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleNavigation(2)}>
           <FontAwesome5 name="plus" size={25} color="#fff" />
         </TouchableOpacity>
       </View>
@@ -115,19 +129,16 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   header: {
+    flexDirection: "row",
     alignSelf: "stretch",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     alignItems: "flex-end",
     marginTop: StatusBar.currentHeight,
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
   headerForOptions: {
-    alignSelf: "stretch",
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    marginTop: 0,
   },
   content: {
     alignSelf: "stretch",
