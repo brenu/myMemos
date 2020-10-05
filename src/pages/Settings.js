@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   Modal,
@@ -14,6 +14,7 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Settings() {
   const navigation = useNavigation();
+  const [showModal, setShowModal] = useState(false);
 
   async function handleGoBack() {
     navigation.goBack();
@@ -29,16 +30,28 @@ export default function Settings() {
       <View style={styles.content}>
         <Text style={styles.title}>Configurações</Text>
         <Text style={styles.label}>Cor principal</Text>
-        <TouchableOpacity style={styles.btn}>
-          <Text>Selecionar</Text>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => setShowModal((showModal) => !showModal)}
+        >
+          <Text style={styles.btnText}>Selecionar</Text>
         </TouchableOpacity>
-        <Modal style={styles.modal} transparent={true}>
-          <View style={styles.modalCard}>
-            <Text style={styles.title}>Selecione a cor</Text>
-            <TriangleColorPicker
-              onColorSelected={(color) => alert(`Color selected: ${color}`)}
-              style={{ flex: 0.8 }}
-            />
+        <Modal
+          animated={true}
+          animationType="slide"
+          visible={showModal}
+          transparent={true}
+        >
+          <View style={styles.modal}>
+            <View style={styles.modalCard}>
+              <Text style={styles.title}>
+                Toque na cor resultante para selecionar
+              </Text>
+              <TriangleColorPicker
+                onColorSelected={() => setShowModal((showModal) => !showModal)}
+                style={{ flex: 1 }}
+              />
+            </View>
           </View>
         </Modal>
       </View>
@@ -84,15 +97,28 @@ const styles = StyleSheet.create({
     borderBottomColor: "#7ec0ee",
   },
   modal: {
+    display: "flex",
     flex: 1,
     justifyContent: "center",
   },
   modalCard: {
-    flex: 0.8,
+    flex: 0.6,
     margin: 10,
     padding: 20,
     borderRadius: 5,
     elevation: 5,
     backgroundColor: "#fff",
+  },
+  btn: {
+    alignItems: "stretch",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 6,
+    backgroundColor: "#7ec0ee",
+  },
+  btnText: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#fff",
   },
 });
