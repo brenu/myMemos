@@ -36,6 +36,27 @@ export default function Settings() {
         >
           <Text style={styles.btnText}>Selecionar</Text>
         </TouchableOpacity>
+        <Text style={styles.label}>Cor secundária</Text>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => setShowModal((showModal) => !showModal)}
+        >
+          <Text style={styles.btnText}>Selecionar</Text>
+        </TouchableOpacity>
+        <Text style={styles.label}>Texto principal</Text>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => setShowModal((showModal) => !showModal)}
+        >
+          <Text style={styles.btnText}>Selecionar</Text>
+        </TouchableOpacity>
+        <Text style={styles.label}>Texto secundário</Text>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => setShowModal((showModal) => !showModal)}
+        >
+          <Text style={styles.btnText}>Selecionar</Text>
+        </TouchableOpacity>
         <Modal
           animated={true}
           animationType="slide"
@@ -113,8 +134,10 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "center",
     alignItems: "center",
-    padding: 6,
     backgroundColor: "#7ec0ee",
+    borderRadius: 2,
+    padding: 6,
+    marginBottom: 10,
   },
   btnText: {
     fontSize: 15,
