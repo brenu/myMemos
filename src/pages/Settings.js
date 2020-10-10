@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  AsyncStorage,
   Dimensions,
   Modal,
   StatusBar,
@@ -15,6 +16,16 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 export default function Settings() {
   const navigation = useNavigation();
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    async function handleInit() {
+      const settings = await AsyncStorage.getItem("settings");
+
+      console.log(settings);
+    }
+
+    handleInit();
+  }, []);
 
   async function handleGoBack() {
     navigation.goBack();
