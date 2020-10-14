@@ -10,22 +10,76 @@ import {
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { TriangleColorPicker } from "react-native-color-picker";
+import { fromHsv, TriangleColorPicker } from "react-native-color-picker";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Settings() {
   const navigation = useNavigation();
   const [showModal, setShowModal] = useState(false);
+  const [settings, setSettings] = useState({});
+  const [option, setOption] = useState(0);
+  const [color, setColor] = useState("#ff0000");
 
   useEffect(() => {
     async function handleInit() {
       const settings = await AsyncStorage.getItem("settings");
 
-      console.log(settings);
+      setSettings(JSON.parse(settings));
     }
 
     handleInit();
   }, []);
+
+  useEffect(() => {
+    console.log(settings);
+
+    async function handleSettingsUpdate() {
+      if (settings !== {}) {
+        await AsyncStorage.setItem("settings", JSON.stringify(settings));
+      }
+    }
+
+    handleSettingsUpdate();
+  }, [settings]);
+
+  function handleModalView(option) {
+    setOption(option);
+    setShowModal((showModal) => !showModal);
+  }
+
+  async function handleSettingsChange() {
+    console.log(option);
+
+    switch (option) {
+      case 1:
+        setSettings((settings) => ({
+          ...settings,
+          primaryColor: fromHsv(color),
+        }));
+        break;
+      case 2:
+        setSettings((settings) => ({
+          ...settings,
+          secondaryColor: fromHsv(color),
+        }));
+        break;
+      case 3:
+        setSettings((settings) => ({
+          ...settings,
+          primaryText: fromHsv(color),
+        }));
+        break;
+      case 4:
+        setSettings((settings) => ({
+          ...settings,
+          secondaryText: fromHsv(color),
+        }));
+        break;
+      default:
+    }
+
+    setShowModal((showModal) => !showModal);
+  }
 
   async function handleGoBack() {
     navigation.goBack();
@@ -41,31 +95,19 @@ export default function Settings() {
       <View style={styles.content}>
         <Text style={styles.title}>Configurações</Text>
         <Text style={styles.label}>Cor principal</Text>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => setShowModal((showModal) => !showModal)}
-        >
+        <TouchableOpacity style={styles.btn} onPress={() => handleModalView(1)}>
           <Text style={styles.btnText}>Selecionar</Text>
         </TouchableOpacity>
         <Text style={styles.label}>Cor secundária</Text>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => setShowModal((showModal) => !showModal)}
-        >
+        <TouchableOpacity style={styles.btn} onPress={() => handleModalView(2)}>
           <Text style={styles.btnText}>Selecionar</Text>
         </TouchableOpacity>
         <Text style={styles.label}>Texto principal</Text>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => setShowModal((showModal) => !showModal)}
-        >
+        <TouchableOpacity style={styles.btn} onPress={() => handleModalView(3)}>
           <Text style={styles.btnText}>Selecionar</Text>
         </TouchableOpacity>
         <Text style={styles.label}>Texto secundário</Text>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => setShowModal((showModal) => !showModal)}
-        >
+        <TouchableOpacity style={styles.btn} onPress={() => handleModalView(4)}>
           <Text style={styles.btnText}>Selecionar</Text>
         </TouchableOpacity>
         <Modal
@@ -80,7 +122,9 @@ export default function Settings() {
                 Toque na cor resultante para selecionar
               </Text>
               <TriangleColorPicker
-                onColorSelected={() => setShowModal((showModal) => !showModal)}
+                color={color}
+                onColorChange={setColor}
+                onColorSelected={handleSettingsChange}
                 style={{ flex: 1 }}
               />
             </View>
