@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { RectButton } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 
@@ -14,7 +14,7 @@ export default function Landing() {
   const [settings, setSettings] = useState({});
   const navigation = useNavigation();
 
-  useEffect(() => {
+  useFocusEffect(() => {
     async function handleInit() {
       let settings = await AsyncStorage.getItem("settings");
       settings = JSON.parse(settings);

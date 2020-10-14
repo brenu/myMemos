@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { fromHsv, TriangleColorPicker } from "react-native-color-picker";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 
@@ -22,9 +22,10 @@ export default function Settings() {
 
   useEffect(() => {
     async function handleInit() {
-      const settings = await AsyncStorage.getItem("settings");
+      let settings = await AsyncStorage.getItem("settings");
+      settings = JSON.parse(settings);
 
-      setSettings(JSON.parse(settings));
+      setSettings(settings);
     }
 
     handleInit();
@@ -86,27 +87,43 @@ export default function Settings() {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: settings.secondaryColor }]}
+    >
       <View style={styles.header}>
         <TouchableOpacity onPress={handleGoBack}>
-          <FontAwesome5 name="arrow-left" size={25} color="#7ec0ee" />
+          <FontAwesome5
+            name="arrow-left"
+            size={25}
+            color={settings.primaryColor}
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.content}>
-        <Text style={styles.title}>Configurações</Text>
-        <Text style={styles.label}>Cor principal</Text>
+        <Text style={[styles.title, { color: settings.primaryText }]}>
+          Configurações
+        </Text>
+        <Text style={[styles.label, { color: settings.primaryText }]}>
+          Cor principal
+        </Text>
         <TouchableOpacity style={styles.btn} onPress={() => handleModalView(1)}>
           <Text style={styles.btnText}>Selecionar</Text>
         </TouchableOpacity>
-        <Text style={styles.label}>Cor secundária</Text>
+        <Text style={[styles.label, { color: settings.primaryText }]}>
+          Cor secundária
+        </Text>
         <TouchableOpacity style={styles.btn} onPress={() => handleModalView(2)}>
           <Text style={styles.btnText}>Selecionar</Text>
         </TouchableOpacity>
-        <Text style={styles.label}>Texto principal</Text>
+        <Text style={[styles.label, { color: settings.primaryText }]}>
+          Texto principal
+        </Text>
         <TouchableOpacity style={styles.btn} onPress={() => handleModalView(3)}>
           <Text style={styles.btnText}>Selecionar</Text>
         </TouchableOpacity>
-        <Text style={styles.label}>Texto secundário</Text>
+        <Text style={[styles.label, { color: settings.primaryText }]}>
+          Texto secundário
+        </Text>
         <TouchableOpacity style={styles.btn} onPress={() => handleModalView(4)}>
           <Text style={styles.btnText}>Selecionar</Text>
         </TouchableOpacity>

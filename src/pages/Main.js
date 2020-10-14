@@ -19,9 +19,21 @@ import OptionsView from "../components/Options";
 
 export default function Main() {
   const [memos, setMemos] = useState([]);
+  const [settings, setSettings] = useState({});
   const [showOptions, setShowOptions] = useState(false);
   const [selectedMemo, setSelectedMemo] = useState(0);
   const navigation = useNavigation();
+
+  useFocusEffect(() => {
+    async function handleInit() {
+      let settings = await AsyncStorage.getItem("settings");
+      settings = JSON.parse(settings);
+
+      setSettings(settings);
+    }
+
+    handleInit();
+  }, []);
 
   useFocusEffect(() => {
     async function handleUpdateMemos() {
@@ -74,7 +86,9 @@ export default function Main() {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: settings.primaryColor }]}
+    >
       {showOptions && (
         <OptionsView>
           <TouchableOpacity
