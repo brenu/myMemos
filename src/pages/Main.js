@@ -94,10 +94,18 @@ export default function Main() {
           <TouchableOpacity
             onPress={() => setShowOptions((showOptions) => !showOptions)}
           >
-            <FontAwesome5 name="times" size={25} color="#fff" />
+            <FontAwesome5
+              name="times"
+              size={25}
+              color={settings.secondaryText}
+            />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleDelete}>
-            <FontAwesome5 name="trash" size={25} color="#fff" />
+            <FontAwesome5
+              name="trash"
+              size={25}
+              color={settings.secondaryText}
+            />
           </TouchableOpacity>
         </OptionsView>
       )}
@@ -105,10 +113,10 @@ export default function Main() {
         style={[styles.header, showOptions ? styles.headerForOptions : null]}
       >
         <TouchableOpacity onPress={() => handleNavigation(1)}>
-          <FontAwesome5 name="cog" size={25} color="#fff" />
+          <FontAwesome5 name="cog" size={25} color={settings.secondaryText} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handleNavigation(2)}>
-          <FontAwesome5 name="plus" size={25} color="#fff" />
+          <FontAwesome5 name="plus" size={25} color={settings.secondaryText} />
         </TouchableOpacity>
       </View>
       {memos.length > 0 ? (
@@ -130,7 +138,9 @@ export default function Main() {
           ))}
         </ScrollView>
       ) : (
-        <Text style={styles.noContentText}>Crie uma nota :)</Text>
+        <Text style={[styles.noContentText, { color: settings.secondaryText }]}>
+          Crie uma nota :)
+        </Text>
       )}
     </View>
   );
@@ -187,6 +197,5 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     fontSize: 20,
     fontWeight: "bold",
-    color: "#fff",
   },
 });

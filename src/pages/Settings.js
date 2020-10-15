@@ -107,25 +107,65 @@ export default function Settings() {
           Cor principal
         </Text>
         <TouchableOpacity style={styles.btn} onPress={() => handleModalView(1)}>
-          <Text style={styles.btnText}>Selecionar</Text>
+          <Text
+            style={[
+              styles.btnText,
+              {
+                backgroundColor: settings.primaryColor,
+                color: settings.primaryText,
+              },
+            ]}
+          >
+            Selecionar
+          </Text>
         </TouchableOpacity>
         <Text style={[styles.label, { color: settings.primaryText }]}>
           Cor secundária
         </Text>
         <TouchableOpacity style={styles.btn} onPress={() => handleModalView(2)}>
-          <Text style={styles.btnText}>Selecionar</Text>
+          <Text
+            style={[
+              styles.btnText,
+              {
+                backgroundColor: settings.secondaryColor,
+                color: settings.primaryText,
+              },
+            ]}
+          >
+            Selecionar
+          </Text>
         </TouchableOpacity>
         <Text style={[styles.label, { color: settings.primaryText }]}>
           Texto principal
         </Text>
         <TouchableOpacity style={styles.btn} onPress={() => handleModalView(3)}>
-          <Text style={styles.btnText}>Selecionar</Text>
+          <Text
+            style={[
+              styles.btnText,
+              {
+                backgroundColor: settings.primaryText,
+                color: settings.secondaryText,
+              },
+            ]}
+          >
+            Selecionar
+          </Text>
         </TouchableOpacity>
         <Text style={[styles.label, { color: settings.primaryText }]}>
           Texto secundário
         </Text>
         <TouchableOpacity style={styles.btn} onPress={() => handleModalView(4)}>
-          <Text style={styles.btnText}>Selecionar</Text>
+          <Text
+            style={[
+              styles.btnText,
+              {
+                backgroundColor: settings.secondaryText,
+                color: settings.primaryText,
+              },
+            ]}
+          >
+            Selecionar
+          </Text>
         </TouchableOpacity>
         <Modal
           animated={true}
@@ -203,17 +243,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   btn: {
-    alignItems: "stretch",
+    alignSelf: "baseline",
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#7ec0ee",
+    alignItems: "stretch",
+    borderColor: "#fff",
+    borderWidth: 1,
     borderRadius: 2,
-    padding: 6,
     marginBottom: 10,
+    elevation: 5,
   },
   btnText: {
     fontSize: 15,
     fontWeight: "bold",
     color: "#fff",
+    padding: 6,
   },
 });
