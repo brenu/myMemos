@@ -87,86 +87,74 @@ export default function Settings() {
   }
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: settings.secondaryColor }]}
-    >
+    <View style={[styles.container]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleGoBack}>
-          <FontAwesome5
-            name="arrow-left"
-            size={25}
-            color={settings.primaryColor}
-          />
+          <FontAwesome5 name="arrow-left" size={25} color="#7ec0ee" />
         </TouchableOpacity>
       </View>
       <View style={styles.content}>
-        <Text style={[styles.title, { color: settings.primaryText }]}>
-          Configurações
-        </Text>
-        <Text style={[styles.label, { color: settings.primaryText }]}>
-          Cor principal
-        </Text>
-        <TouchableOpacity style={styles.btn} onPress={() => handleModalView(1)}>
-          <Text
-            style={[
-              styles.btnText,
-              {
-                backgroundColor: settings.primaryColor,
-                color: settings.primaryText,
-              },
-            ]}
+        <Text style={[styles.title]}>Configurações</Text>
+        <Text style={[styles.label]}>Cor principal</Text>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => handleModalView(1)}
           >
-            Selecionar
-          </Text>
-        </TouchableOpacity>
-        <Text style={[styles.label, { color: settings.primaryText }]}>
-          Cor secundária
-        </Text>
-        <TouchableOpacity style={styles.btn} onPress={() => handleModalView(2)}>
-          <Text
+            <Text style={[styles.btnText]}>Selecionar</Text>
+          </TouchableOpacity>
+          <View
             style={[
-              styles.btnText,
-              {
-                backgroundColor: settings.secondaryColor,
-                color: settings.primaryText,
-              },
+              styles.colorContainer,
+              { backgroundColor: settings.primaryColor },
             ]}
+          ></View>
+        </View>
+        <Text style={[styles.label]}>Cor secundária</Text>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => handleModalView(2)}
           >
-            Selecionar
-          </Text>
-        </TouchableOpacity>
-        <Text style={[styles.label, { color: settings.primaryText }]}>
-          Texto principal
-        </Text>
-        <TouchableOpacity style={styles.btn} onPress={() => handleModalView(3)}>
-          <Text
+            <Text style={[styles.btnText]}>Selecionar</Text>
+          </TouchableOpacity>
+          <View
             style={[
-              styles.btnText,
-              {
-                backgroundColor: settings.primaryText,
-                color: settings.secondaryText,
-              },
+              styles.colorContainer,
+              { backgroundColor: settings.secondaryColor },
             ]}
+          ></View>
+        </View>
+        <Text style={[styles.label]}>Texto principal</Text>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => handleModalView(3)}
           >
-            Selecionar
-          </Text>
-        </TouchableOpacity>
-        <Text style={[styles.label, { color: settings.primaryText }]}>
-          Texto secundário
-        </Text>
-        <TouchableOpacity style={styles.btn} onPress={() => handleModalView(4)}>
-          <Text
+            <Text style={[styles.btnText]}>Selecionar</Text>
+          </TouchableOpacity>
+          <View
             style={[
-              styles.btnText,
-              {
-                backgroundColor: settings.secondaryText,
-                color: settings.primaryText,
-              },
+              styles.colorContainer,
+              { backgroundColor: settings.primaryText },
             ]}
+          ></View>
+        </View>
+        <Text style={[styles.label]}>Texto secundário</Text>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => handleModalView(4)}
           >
-            Selecionar
-          </Text>
-        </TouchableOpacity>
+            <Text style={[styles.btnText]}>Selecionar</Text>
+          </TouchableOpacity>
+          <View
+            style={[
+              styles.colorContainer,
+              { backgroundColor: settings.secondaryText },
+            ]}
+          ></View>
+        </View>
         <Modal
           animated={true}
           animationType="slide"
@@ -243,12 +231,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   btn: {
+    backgroundColor: "#7ec0ee",
     alignSelf: "baseline",
     justifyContent: "center",
     alignItems: "stretch",
     borderColor: "#fff",
-    borderWidth: 1,
-    borderRadius: 2,
     marginBottom: 10,
     elevation: 5,
   },
@@ -257,5 +244,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     padding: 6,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  colorContainer: {
+    backgroundColor: "#f00",
+    height: 30,
+    width: 30,
+    marginBottom: 10,
+    marginLeft: 10,
+    elevation: 5,
   },
 });
