@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { AsyncStorage, StatusBar, StyleSheet, Text, View } from "react-native";
 import {
   RectButton,
@@ -12,8 +12,20 @@ import { FontAwesome5 } from "@expo/vector-icons";
 export default function NewMemo() {
   const [memos, setMemos] = useState([]);
   const [memosLength, setMemosLength] = useState(0);
+  const [settings, setSettings] = useState({});
 
   const navigation = useNavigation();
+
+  useFocusEffect(() => {
+    async function handleInit() {
+      let settings = await AsyncStorage.getItem("settings");
+      settings = JSON.parse(settings);
+
+      setSettings(settings);
+    }
+
+    handleInit();
+  }, []);
 
   useEffect(() => {
     async function handleInit() {
@@ -46,10 +58,16 @@ export default function NewMemo() {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: settings.primaryColor }]}
+    >
       <View style={styles.header}>
         <TouchableOpacity onPress={handleGoBack}>
-          <FontAwesome5 name="arrow-left" size={25} color="#7ec0ee" />
+          <FontAwesome5
+            name="arrow-left"
+            size={25}
+            color={settings.secondaryText}
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.content}>
@@ -86,8 +104,11 @@ export default function NewMemo() {
             );
           }}
         />
-        <RectButton style={styles.btn} onPress={handleSubmit}>
-          <Text style={styles.btnText}>Criar Nota</Text>
+        <RectButton
+          style={[styles.btn, { backgroundColor: settings.secondaryText }]}
+          onPress={handleSubmit}
+        >
+          <Text style={[styles.btnText]}>Criar Nota</Text>
         </RectButton>
       </View>
     </View>
