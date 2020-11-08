@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import {
+  useRoute,
+  useNavigation,
+  useFocusEffect,
+} from "@react-navigation/native";
 import {
   AsyncStorage,
   StatusBar,
@@ -13,10 +17,22 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Editor() {
   const [memos, setMemos] = useState([]);
+  const [settings, setSettings] = useState([]);
 
   const navigation = useNavigation();
   const route = useRoute();
   const index = route.params.index;
+
+  useFocusEffect(() => {
+    async function handleInit() {
+      let settings = await AsyncStorage.getItem("settings");
+      settings = JSON.parse(settings);
+
+      setSettings(settings);
+    }
+
+    handleInit();
+  }, []);
 
   useEffect(() => {
     async function handleInit() {
@@ -45,10 +61,12 @@ export default function Editor() {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: settings.primaryColor }]}
+    >
       <View style={styles.header}>
         <TouchableOpacity onPress={handleCancel}>
-          <FontAwesome5 name="times" size={25} color="#7ec0ee" />
+          <FontAwesome5 name="times" size={25} color={settings.secondaryText} />
         </TouchableOpacity>
       </View>
       <View style={styles.content}>
@@ -83,7 +101,10 @@ export default function Editor() {
             );
           }}
         />
-        <RectButton style={styles.btn} onPress={handleEdit}>
+        <RectButton
+          style={[styles.btn, { backgroundColor: settings.secondaryText }]}
+          onPress={handleEdit}
+        >
           <Text style={styles.btnText}>Editar</Text>
         </RectButton>
       </View>
