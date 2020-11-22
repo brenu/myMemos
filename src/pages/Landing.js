@@ -28,6 +28,7 @@ export default function Landing() {
           cardColor: "#fff",
           cardTitleColor: "#777",
           cardContentColor: "#777",
+          buttonColor: "#4bb543",
         };
 
         await AsyncStorage.setItem("settings", JSON.stringify(settings));
@@ -50,7 +51,10 @@ export default function Landing() {
       <Text style={[styles.title, { color: settings.primaryText }]}>
         myMemos
       </Text>
-      <RectButton style={styles.btn} onPress={handleNavigation}>
+      <RectButton
+        style={[styles.btn, { backgroundColor: settings.buttonColor }]}
+        onPress={handleNavigation}
+      >
         <Feather name="edit" size={30} color="#fff" />
       </RectButton>
     </View>

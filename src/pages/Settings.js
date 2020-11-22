@@ -54,6 +54,12 @@ export default function Settings() {
 
   async function handleSettingsChange() {
     switch (option) {
+      case 0:
+        setSettings((settings) => ({
+          ...settings,
+          buttonColor: fromHsv(color),
+        }));
+        break;
       case 1:
         setSettings((settings) => ({
           ...settings,
@@ -113,12 +119,27 @@ export default function Settings() {
   return (
     <View style={[styles.container]}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleGoBack}>
+        {/* <TouchableOpacity onPress={handleGoBack}>
           <FontAwesome5 name="arrow-left" size={25} color="#7ec0ee" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <ScrollView style={styles.content}>
         <Text style={[styles.title]}>Configurações</Text>
+        <Text style={[styles.label]}>Botão principal</Text>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => handleModalView(0)}
+          >
+            <Text style={[styles.btnText]}>Selecionar</Text>
+          </TouchableOpacity>
+          <View
+            style={[
+              styles.colorContainer,
+              { backgroundColor: settings.buttonColor },
+            ]}
+          ></View>
+        </View>
         <Text style={[styles.label]}>Cor principal</Text>
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
