@@ -11,7 +11,11 @@ import {
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { fromHsv, TriangleColorPicker } from "react-native-color-picker";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import {
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
 
 export default function Settings() {
   const navigation = useNavigation();
@@ -111,7 +115,7 @@ export default function Settings() {
           <FontAwesome5 name="arrow-left" size={25} color="#7ec0ee" />
         </TouchableOpacity>
       </View>
-      <View style={styles.content}>
+      <ScrollView style={styles.content}>
         <Text style={[styles.title]}>Configurações</Text>
         <Text style={[styles.label]}>Cor principal</Text>
         <View style={styles.buttonsContainer}>
@@ -218,6 +222,46 @@ export default function Settings() {
             ]}
           ></View>
         </View>
+        <View style={styles.screensContainer}>
+          <View
+            style={[
+              styles.screenContainer,
+              { backgroundColor: settings.primaryColor },
+            ]}
+          >
+            <View style={[styles.exampleHeader]}>
+              <FontAwesome5
+                name="cog"
+                size={25}
+                color={settings.secondaryText}
+              />
+
+              <FontAwesome5
+                name="plus"
+                size={25}
+                color={settings.secondaryText}
+              />
+            </View>
+            <View
+              style={[styles.card, { backgroundColor: settings.cardColor }]}
+            >
+              <Text
+                style={[styles.cardTitle, { color: settings.cardTitleColor }]}
+              >
+                Test title
+              </Text>
+              <Text
+                style={[
+                  styles.cardContent,
+                  { color: settings.cardContentColor },
+                ]}
+              >
+                Sample description
+              </Text>
+            </View>
+          </View>
+          <View style={[styles.screenContainer, {}]}></View>
+        </View>
         <Modal
           animated={true}
           animationType="slide"
@@ -238,7 +282,7 @@ export default function Settings() {
             </View>
           </View>
         </Modal>
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -320,5 +364,47 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 10,
     elevation: 5,
+  },
+  screensContainer: {
+    flexDirection: "row",
+    alignSelf: "stretch",
+    marginBottom: 20,
+    padding: 10,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  screenContainer: {
+    height: 200,
+    width: 150,
+    borderRadius: 8,
+  },
+  card: {
+    alignSelf: "stretch",
+    flexDirection: "column",
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+    marginHorizontal: 20,
+    padding: 10,
+    borderRadius: 5,
+    elevation: 2,
+    marginBottom: 5,
+  },
+  cardTitle: {
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#777",
+  },
+  cardContent: {
+    marginTop: 5,
+    fontSize: 10,
+    color: "#777",
+  },
+  exampleHeader: {
+    flexDirection: "row",
+    alignSelf: "stretch",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
   },
 });
