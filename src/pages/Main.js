@@ -130,7 +130,9 @@ export default function Main() {
               onPress={() => handleEdit(index)}
               onLongPress={() => handleOptions(index)}
             >
-              <RectButton style={styles.card}>
+              <RectButton
+                style={[styles.card, { backgroundColor: settings.cardColor }]}
+              >
                 <Text
                   style={[styles.cardTitle, { color: settings.cardTitleColor }]}
                 >
