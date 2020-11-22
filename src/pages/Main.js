@@ -24,7 +24,7 @@ export default function Main() {
   const [selectedMemo, setSelectedMemo] = useState(0);
   const navigation = useNavigation();
 
-  useFocusEffect(() => {
+  useEffect(() => {
     async function handleInit() {
       let settings = await AsyncStorage.getItem("settings");
       settings = JSON.parse(settings);

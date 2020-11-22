@@ -16,7 +16,7 @@ export default function NewMemo() {
 
   const navigation = useNavigation();
 
-  useFocusEffect(() => {
+  useEffect(() => {
     async function handleInit() {
       let settings = await AsyncStorage.getItem("settings");
       settings = JSON.parse(settings);
@@ -58,15 +58,13 @@ export default function NewMemo() {
   }
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: settings.primaryColor }]}
-    >
+    <View style={[styles.container]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleGoBack}>
           <FontAwesome5
             name="arrow-left"
             size={25}
-            color={settings.secondaryText}
+            color={settings.primaryText}
           />
         </TouchableOpacity>
       </View>
@@ -105,7 +103,7 @@ export default function NewMemo() {
           }}
         />
         <RectButton
-          style={[styles.btn, { backgroundColor: settings.secondaryText }]}
+          style={[styles.btn, { backgroundColor: settings.primaryColor }]}
           onPress={handleSubmit}
         >
           <Text style={[styles.btnText]}>Criar Nota</Text>

@@ -23,7 +23,7 @@ export default function Editor() {
   const route = useRoute();
   const index = route.params.index;
 
-  useFocusEffect(() => {
+  useEffect(() => {
     async function handleInit() {
       let settings = await AsyncStorage.getItem("settings");
       settings = JSON.parse(settings);
@@ -61,12 +61,10 @@ export default function Editor() {
   }
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: settings.primaryColor }]}
-    >
+    <View style={[styles.container]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleCancel}>
-          <FontAwesome5 name="times" size={25} color={settings.secondaryText} />
+          <FontAwesome5 name="times" size={25} color={settings.primaryText} />
         </TouchableOpacity>
       </View>
       <View style={styles.content}>
@@ -102,7 +100,7 @@ export default function Editor() {
           }}
         />
         <RectButton
-          style={[styles.btn, { backgroundColor: settings.secondaryText }]}
+          style={[styles.btn, { backgroundColor: settings.primaryColor }]}
           onPress={handleEdit}
         >
           <Text style={styles.btnText}>Editar</Text>

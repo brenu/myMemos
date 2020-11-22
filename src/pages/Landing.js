@@ -14,7 +14,7 @@ export default function Landing() {
   const [settings, setSettings] = useState({});
   const navigation = useNavigation();
 
-  useFocusEffect(() => {
+  useEffect(() => {
     async function handleInit() {
       let settings = await AsyncStorage.getItem("settings");
       settings = JSON.parse(settings);
@@ -35,10 +35,6 @@ export default function Landing() {
 
     handleInit();
   }, []);
-
-  useEffect(() => {
-    console.log(settings);
-  }, [settings]);
 
   function handleNavigation() {
     navigation.navigate("Main");
