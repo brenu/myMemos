@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   AsyncStorage,
+  BackHandler,
   Dimensions,
   Modal,
   StatusBar,
@@ -16,6 +17,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native-gesture-handler";
+import { Restart } from "fiction-expo-restart";
 
 export default function Settings() {
   const navigation = useNavigation();
@@ -36,8 +38,6 @@ export default function Settings() {
   }, []);
 
   useEffect(() => {
-    console.log(settings);
-
     async function handleSettingsUpdate() {
       if (settings !== {}) {
         await AsyncStorage.setItem("settings", JSON.stringify(settings));
@@ -53,8 +53,6 @@ export default function Settings() {
   }
 
   async function handleSettingsChange() {
-    console.log(option);
-
     switch (option) {
       case 1:
         setSettings((settings) => ({
@@ -105,8 +103,12 @@ export default function Settings() {
   }
 
   async function handleGoBack() {
-    navigation.goBack();
+    Restart();
   }
+
+  BackHandler.addEventListener("hardwareBackPress", () => {
+    Restart();
+  });
 
   return (
     <View style={[styles.container]}>
@@ -326,7 +328,6 @@ export default function Settings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    overflow: "scroll",
   },
   header: {
     alignSelf: "stretch",
