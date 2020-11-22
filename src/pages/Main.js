@@ -131,8 +131,19 @@ export default function Main() {
               onLongPress={() => handleOptions(index)}
             >
               <RectButton style={styles.card}>
-                <Text style={styles.cardTitle}>{card.title}</Text>
-                <Text style={styles.cardContent}>{card.content}</Text>
+                <Text
+                  style={[styles.cardTitle, { color: settings.cardTitleColor }]}
+                >
+                  {card.title}
+                </Text>
+                <Text
+                  style={[
+                    styles.cardContent,
+                    { color: settings.cardContentColor },
+                  ]}
+                >
+                  {card.content}
+                </Text>
               </RectButton>
             </TouchableWithoutFeedback>
           ))}

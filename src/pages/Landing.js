@@ -25,6 +25,9 @@ export default function Landing() {
           secondaryColor: "#F2F2F2",
           primaryText: "#7ec0ee",
           secondaryText: "#ffffff",
+          cardColor: "#fff",
+          cardTitleColor: "#777",
+          cardContentColor: "#777",
         };
 
         await AsyncStorage.setItem("settings", JSON.stringify(settings));

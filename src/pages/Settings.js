@@ -76,6 +76,24 @@ export default function Settings() {
           secondaryText: fromHsv(color),
         }));
         break;
+      case 5:
+        setSettings((settings) => ({
+          ...settings,
+          cardColor: fromHsv(color),
+        }));
+        break;
+      case 6:
+        setSettings((settings) => ({
+          ...settings,
+          cardTitleColor: fromHsv(color),
+        }));
+        break;
+      case 7:
+        setSettings((settings) => ({
+          ...settings,
+          cardContentColor: fromHsv(color),
+        }));
+        break;
       default:
     }
 
@@ -152,6 +170,51 @@ export default function Settings() {
             style={[
               styles.colorContainer,
               { backgroundColor: settings.secondaryText },
+            ]}
+          ></View>
+        </View>
+        <Text style={[styles.label]}>Cor do card</Text>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => handleModalView(5)}
+          >
+            <Text style={[styles.btnText]}>Selecionar</Text>
+          </TouchableOpacity>
+          <View
+            style={[
+              styles.colorContainer,
+              { backgroundColor: settings.cardColor },
+            ]}
+          ></View>
+        </View>
+        <Text style={[styles.label]}>Título do card</Text>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => handleModalView(6)}
+          >
+            <Text style={[styles.btnText]}>Selecionar</Text>
+          </TouchableOpacity>
+          <View
+            style={[
+              styles.colorContainer,
+              { backgroundColor: settings.cardTitleColor },
+            ]}
+          ></View>
+        </View>
+        <Text style={[styles.label]}>Conteúdo do card</Text>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => handleModalView(7)}
+          >
+            <Text style={[styles.btnText]}>Selecionar</Text>
+          </TouchableOpacity>
+          <View
+            style={[
+              styles.colorContainer,
+              { backgroundColor: settings.cardContentColor },
             ]}
           ></View>
         </View>
