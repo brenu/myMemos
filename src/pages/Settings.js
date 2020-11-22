@@ -260,7 +260,43 @@ export default function Settings() {
               </Text>
             </View>
           </View>
-          <View style={[styles.screenContainer, {}]}></View>
+          <View
+            style={[
+              styles.screenContainer,
+              { backgroundColor: settings.secondaryColor },
+            ]}
+          >
+            <View style={styles.exampleHeader}>
+              <FontAwesome5
+                name="arrow-left"
+                size={25}
+                color={settings.primaryText}
+              />
+            </View>
+            <View style={styles.exampleContent}>
+              <View style={[styles.exampleInput, []]}>
+                <Text style={styles.inputText}>Example</Text>
+              </View>
+              <View style={[styles.exampleLongInput, []]}>
+                <Text style={styles.inputText}>Blah blah</Text>
+              </View>
+              <View
+                style={[
+                  styles.exampleBtn,
+                  { backgroundColor: settings.primaryColor },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.exampleBtnText,
+                    { color: settings.secondaryText },
+                  ]}
+                >
+                  Criar Nota
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
         <Modal
           animated={true}
@@ -290,6 +326,7 @@ export default function Settings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    overflow: "scroll",
   },
   header: {
     alignSelf: "stretch",
@@ -377,6 +414,7 @@ const styles = StyleSheet.create({
     height: 200,
     width: 150,
     borderRadius: 8,
+    elevation: 5,
   },
   card: {
     alignSelf: "stretch",
@@ -406,5 +444,48 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 10,
     paddingHorizontal: 20,
+  },
+  exampleContent: {
+    flex: 1,
+    alignSelf: "stretch",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 30,
+  },
+  exampleInput: {
+    alignSelf: "stretch",
+    borderBottomColor: "#eee",
+    borderBottomWidth: 1,
+    padding: 5,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    color: "#777",
+  },
+  exampleLongInput: {
+    alignSelf: "stretch",
+    padding: 5,
+    backgroundColor: "#fff",
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    color: "#777",
+  },
+  inputText: {
+    color: "#ccc",
+    fontSize: 10,
+  },
+  exampleBtn: {
+    marginTop: 10,
+    alignSelf: "stretch",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 2,
+    backgroundColor: "#7ec0ee",
+    borderRadius: 2,
+  },
+  exampleBtnText: {
+    fontSize: 12,
+    fontWeight: "bold",
   },
 });
