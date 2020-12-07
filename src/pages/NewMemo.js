@@ -58,7 +58,9 @@ export default function NewMemo() {
   }
 
   return (
-    <View style={[styles.container]}>
+    <View
+      style={[styles.container, { backgroundColor: settings.secondaryColor }]}
+    >
       <View style={styles.header}>
         <TouchableOpacity onPress={handleGoBack}>
           <FontAwesome5
@@ -106,7 +108,9 @@ export default function NewMemo() {
           style={[styles.btn, { backgroundColor: settings.primaryColor }]}
           onPress={handleSubmit}
         >
-          <Text style={[styles.btnText]}>Criar Nota</Text>
+          <Text style={[styles.btnText, { color: settings.secondaryText }]}>
+            Criar Nota
+          </Text>
         </RectButton>
       </View>
     </View>

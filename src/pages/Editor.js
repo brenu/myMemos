@@ -61,7 +61,9 @@ export default function Editor() {
   }
 
   return (
-    <View style={[styles.container]}>
+    <View
+      style={[styles.container, { backgroundColor: settings.secondaryColor }]}
+    >
       <View style={styles.header}>
         <TouchableOpacity onPress={handleCancel}>
           <FontAwesome5 name="times" size={25} color={settings.primaryText} />
@@ -103,7 +105,9 @@ export default function Editor() {
           style={[styles.btn, { backgroundColor: settings.primaryColor }]}
           onPress={handleEdit}
         >
-          <Text style={styles.btnText}>Editar</Text>
+          <Text style={[styles.btnText, { color: settings.secondaryText }]}>
+            Editar
+          </Text>
         </RectButton>
       </View>
     </View>

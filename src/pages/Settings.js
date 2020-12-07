@@ -17,6 +17,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native-gesture-handler";
+
 import { Restart } from "fiction-expo-restart";
 
 export default function Settings() {
@@ -25,6 +26,7 @@ export default function Settings() {
   const [settings, setSettings] = useState({});
   const [option, setOption] = useState(0);
   const [color, setColor] = useState("#ff0000");
+  const [isRestartReady, setIsRestartReady] = useState(false);
 
   useEffect(() => {
     async function handleInit() {
@@ -35,6 +37,7 @@ export default function Settings() {
     }
 
     handleInit();
+    setTimeout(() => setIsRestartReady(true), 3100);
   }, []);
 
   useEffect(() => {
@@ -108,20 +111,26 @@ export default function Settings() {
     setShowModal((showModal) => !showModal);
   }
 
-  async function handleGoBack() {
-    Restart();
+  function handleGoBack() {
+    if (isRestartReady) {
+      Restart();
+    }
   }
 
   BackHandler.addEventListener("hardwareBackPress", () => {
-    Restart();
+    if (isRestartReady) {
+      Restart();
+    }
+
+    return true;
   });
 
   return (
     <View style={[styles.container]}>
       <View style={styles.header}>
-        {/* <TouchableOpacity onPress={handleGoBack}>
+        <TouchableOpacity onPress={handleGoBack}>
           <FontAwesome5 name="arrow-left" size={25} color="#7ec0ee" />
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
       <ScrollView style={styles.content}>
         <Text style={[styles.title]}>Configurações</Text>
