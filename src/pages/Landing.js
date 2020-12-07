@@ -32,6 +32,8 @@ export default function Landing() {
         };
 
         await AsyncStorage.setItem("settings", JSON.stringify(settings));
+      } else {
+        navigation.navigate("Main");
       }
 
       setSettings(settings);
