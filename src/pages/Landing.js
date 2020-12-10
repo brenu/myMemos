@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
+  Animated,
   AsyncStorage,
   StyleSheet,
   Text,
@@ -13,6 +14,16 @@ import { Feather } from "@expo/vector-icons";
 export default function Landing() {
   const [settings, setSettings] = useState({});
   const navigation = useNavigation();
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  };
 
   useEffect(() => {
     async function handleInit() {
@@ -37,6 +48,7 @@ export default function Landing() {
       }
 
       setSettings(settings);
+      setTimeout(() => fadeIn(), 700);
     }
 
     handleInit();
@@ -53,12 +65,14 @@ export default function Landing() {
       <Text style={[styles.title, { color: settings.primaryText }]}>
         myMemos
       </Text>
-      <RectButton
-        style={[styles.btn, { backgroundColor: settings.buttonColor }]}
-        onPress={handleNavigation}
-      >
-        <Feather name="edit" size={30} color="#fff" />
-      </RectButton>
+      <Animated.View style={[styles.btnContainer, { opacity: fadeAnim }]}>
+        <RectButton
+          style={[styles.btn, { backgroundColor: settings.buttonColor }]}
+          onPress={handleNavigation}
+        >
+          <Feather name="edit" size={30} color="#fff" />
+        </RectButton>
+      </Animated.View>
     </View>
   );
 }
@@ -82,7 +96,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 30,
     backgroundColor: "#4BB543",
+    borderWidth: 0,
     borderRadius: 5,
-    elevation: 2,
   },
 });

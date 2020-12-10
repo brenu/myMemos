@@ -18,6 +18,7 @@ export default function Routes() {
 
   useEffect(() => {
     async function handleInit() {
+      await SplashScreen.preventAutoHideAsync();
       let settings = await AsyncStorage.getItem("settings");
       settings = JSON.parse(settings);
 

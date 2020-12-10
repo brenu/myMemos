@@ -6,14 +6,6 @@ import * as SplashScreen from "expo-splash-screen";
 import Routes from "./src/routes";
 
 export default function App() {
-  useEffect(() => {
-    async function handleInit() {
-      await SplashScreen.preventAutoHideAsync();
-    }
-
-    handleInit();
-  }, []);
-
   return (
     <>
       <Routes />
