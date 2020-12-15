@@ -21,8 +21,8 @@
       "favicon": "./assets/favicon.png"
     },
     "androidNavigationBar": {
-      "barStyle": "dark-content",
-      "backgroundColor": "#ffffff"
+      "barStyle": "light-content",
+      "backgroundColor": "#000000"
     },
     "android": {
       "package": "com.brenu.mymemos",

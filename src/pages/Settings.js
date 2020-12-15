@@ -7,15 +7,16 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { fromHsv, TriangleColorPicker } from "react-native-color-picker";
 import {
+  RectButton,
   ScrollView,
   TextInput,
-  TouchableOpacity,
 } from "react-native-gesture-handler";
 
 import { Restart } from "fiction-expo-restart";
@@ -27,6 +28,7 @@ export default function Settings() {
   const [option, setOption] = useState(0);
   const [color, setColor] = useState("#ff0000");
   const [isRestartReady, setIsRestartReady] = useState(false);
+  const [showRestartModal, setShowRestartModal] = useState(false);
 
   useEffect(() => {
     async function handleInit() {
@@ -111,15 +113,26 @@ export default function Settings() {
     setShowModal((showModal) => !showModal);
   }
 
-  function handleGoBack() {
+  function handleCancel() {
+    setShowModal(false);
+    setShowRestartModal(false);
+  }
+
+  function handleRestart() {
+    Restart();
+  }
+
+  function handleGoBackButton() {
     if (isRestartReady) {
-      Restart();
+      setShowModal(true);
+      setShowRestartModal(true);
     }
   }
 
   BackHandler.addEventListener("hardwareBackPress", () => {
     if (isRestartReady) {
-      Restart();
+      setShowModal(true);
+      setShowRestartModal(true);
     }
 
     return true;
@@ -128,7 +141,7 @@ export default function Settings() {
   return (
     <View style={[styles.container]}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleGoBack}>
+        <TouchableOpacity onPress={handleGoBackButton}>
           <FontAwesome5 name="arrow-left" size={25} color="#7ec0ee" />
         </TouchableOpacity>
       </View>
@@ -337,17 +350,57 @@ export default function Settings() {
           transparent={true}
         >
           <View style={styles.modal}>
-            <View style={styles.modalCard}>
-              <Text style={styles.title}>
-                Toque na cor resultante para selecionar
-              </Text>
-              <TriangleColorPicker
-                color={color}
-                onColorChange={setColor}
-                onColorSelected={handleSettingsChange}
-                style={{ flex: 1 }}
-              />
-            </View>
+            {!showRestartModal ? (
+              <View style={styles.modalCard}>
+                <Text style={styles.title}>
+                  Toque na cor resultante para selecionar
+                </Text>
+                <TriangleColorPicker
+                  color={color}
+                  onColorChange={setColor}
+                  onColorSelected={handleSettingsChange}
+                  style={{ flex: 1 }}
+                />
+              </View>
+            ) : (
+              <View style={[styles.modalCard, { flex: 0.2 }]}>
+                <Text
+                  style={{ fontSize: 18, color: "#777", textAlign: "center" }}
+                >
+                  Será necessário reiniciar o aplicativo, tem certeza?
+                </Text>
+                <View style={styles.confirmContainer}>
+                  <TouchableOpacity
+                    style={styles.cancelBtn}
+                    onPress={handleCancel}
+                  >
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      Não
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.confirmBtn}
+                    onPress={handleRestart}
+                  >
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      Sim
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
           </View>
         </Modal>
       </ScrollView>
@@ -438,7 +491,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     marginBottom: 20,
     padding: 10,
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   screenContainer: {
@@ -467,6 +520,24 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 10,
     color: "#777",
+  },
+  confirmBtn: {
+    padding: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#4bb543",
+    borderRadius: 5,
+  },
+  cancelBtn: {
+    padding: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#f55",
+    borderRadius: 5,
+  },
+  confirmContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "stretch",
+    marginTop: 30,
   },
   exampleHeader: {
     flexDirection: "row",
