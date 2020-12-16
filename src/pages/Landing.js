@@ -27,7 +27,7 @@ export default function Landing() {
 
   useEffect(() => {
     async function handleInit() {
-      let settings = await AsyncStorage.getItem("settings");
+      let settings = await AsyncStorage.getItem("mymemos@settings");
       settings = JSON.parse(settings);
 
       if (!settings) {
@@ -42,7 +42,10 @@ export default function Landing() {
           buttonColor: "#4bb543",
         };
 
-        await AsyncStorage.setItem("settings", JSON.stringify(settings));
+        await AsyncStorage.setItem(
+          "mymemos@settings",
+          JSON.stringify(settings)
+        );
       } else {
         navigation.navigate("Main");
       }

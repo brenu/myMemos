@@ -25,7 +25,7 @@ export default function Editor() {
 
   useEffect(() => {
     async function handleInit() {
-      let settings = await AsyncStorage.getItem("settings");
+      let settings = await AsyncStorage.getItem("mymemos@settings");
       settings = JSON.parse(settings);
 
       setSettings(settings);

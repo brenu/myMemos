@@ -32,7 +32,7 @@ export default function Settings() {
 
   useEffect(() => {
     async function handleInit() {
-      let settings = await AsyncStorage.getItem("settings");
+      let settings = await AsyncStorage.getItem("mymemos@settings");
       settings = JSON.parse(settings);
 
       setSettings(settings);
@@ -45,7 +45,10 @@ export default function Settings() {
   useEffect(() => {
     async function handleSettingsUpdate() {
       if (settings !== {}) {
-        await AsyncStorage.setItem("settings", JSON.stringify(settings));
+        await AsyncStorage.setItem(
+          "mymemos@settings",
+          JSON.stringify(settings)
+        );
       }
     }
 
