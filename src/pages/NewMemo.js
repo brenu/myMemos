@@ -88,7 +88,7 @@ export default function NewMemo() {
         />
         <TextInput
           style={styles.longInput}
-          autoCapitalize="words"
+          autoCapitalize="sentences"
           autoCorrect={false}
           placeholder="Mensagem"
           multiline={true}
