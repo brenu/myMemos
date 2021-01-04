@@ -310,7 +310,13 @@ export default function Settings() {
               />
             </View>
             <View
-              style={[styles.card, { backgroundColor: settings.cardColor }]}
+              style={[
+                styles.card,
+                {
+                  backgroundColor: settings.cardColor,
+                  borderRadius: Number(settings.cardRadius),
+                },
+              ]}
             >
               <Text
                 style={[styles.cardTitle, { color: settings.cardTitleColor }]}
@@ -341,10 +347,26 @@ export default function Settings() {
               />
             </View>
             <View style={styles.exampleContent}>
-              <View style={[styles.exampleInput, []]}>
+              <View
+                style={[
+                  styles.exampleInput,
+                  {
+                    borderTopLeftRadius: Number(settings.cardRadius),
+                    borderTopRightRadius: Number(settings.cardRadius),
+                  },
+                ]}
+              >
                 <Text style={styles.inputText}>Example</Text>
               </View>
-              <View style={[styles.exampleLongInput, []]}>
+              <View
+                style={[
+                  styles.exampleLongInput,
+                  {
+                    borderBottomLeftRadius: Number(settings.cardRadius),
+                    borderBottomRightRadius: Number(settings.cardRadius),
+                  },
+                ]}
+              >
                 <Text style={styles.inputText}>Blah blah</Text>
               </View>
               <View
@@ -623,5 +645,8 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderBottomWidth: 1,
     borderBottomColor: "#7ec0ee",
+    textAlign: "center",
+    color: "#aaa",
+    fontWeight: "bold",
   },
 });
