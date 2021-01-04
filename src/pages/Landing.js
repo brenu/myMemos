@@ -30,26 +30,7 @@ export default function Landing() {
       let settings = await AsyncStorage.getItem("mymemos@settings");
       settings = JSON.parse(settings);
 
-      if (!settings) {
-        settings = {
-          primaryColor: "#7ec0ee",
-          secondaryColor: "#F2F2F2",
-          primaryText: "#7ec0ee",
-          secondaryText: "#ffffff",
-          cardColor: "#fff",
-          cardTitleColor: "#777",
-          cardContentColor: "#777",
-          buttonColor: "#4bb543",
-        };
-
-        await AsyncStorage.setItem(
-          "mymemos@settings",
-          JSON.stringify(settings)
-        );
-      } else {
-        navigation.navigate("Main");
-      }
-
+      console.log(settings);
       setSettings(settings);
       setTimeout(() => fadeIn(), 700);
     }

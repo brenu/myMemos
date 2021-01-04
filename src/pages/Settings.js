@@ -29,6 +29,7 @@ export default function Settings() {
   const [color, setColor] = useState("#ff0000");
   const [isRestartReady, setIsRestartReady] = useState(false);
   const [showRestartModal, setShowRestartModal] = useState(false);
+  const [temporaryInputValue, setTemporaryInputValue] = useState("");
 
   useEffect(() => {
     async function handleInit() {
@@ -47,7 +48,10 @@ export default function Settings() {
       if (settings !== {}) {
         await AsyncStorage.setItem(
           "mymemos@settings",
-          JSON.stringify(settings)
+          JSON.stringify({
+            ...settings,
+            cardRadius: Number(settings.cardRadius),
+          })
         );
       }
     }
@@ -111,9 +115,23 @@ export default function Settings() {
         }));
         break;
       default:
+        break;
     }
 
-    setShowModal((showModal) => !showModal);
+    setShowModal((showModal) => false);
+  }
+
+  function handleInputsChange(text) {
+    switch (option) {
+      case 1:
+        setSettings(() => ({
+          ...settings,
+          cardRadius: text.replace(/[^0-9]/g, ""),
+        }));
+        break;
+      default:
+        break;
+    }
   }
 
   function handleCancel() {
@@ -150,125 +168,126 @@ export default function Settings() {
       </View>
       <ScrollView style={styles.content}>
         <Text style={[styles.title]}>Configurações</Text>
-        <Text style={[styles.label]}>Botão principal</Text>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => handleModalView(0)}
-          >
-            <Text style={[styles.btnText]}>Selecionar</Text>
-          </TouchableOpacity>
-          <View
-            style={[
-              styles.colorContainer,
-              { backgroundColor: settings.buttonColor },
-            ]}
-          ></View>
-        </View>
-        <Text style={[styles.label]}>Cor principal</Text>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => handleModalView(1)}
-          >
-            <Text style={[styles.btnText]}>Selecionar</Text>
-          </TouchableOpacity>
-          <View
-            style={[
-              styles.colorContainer,
-              { backgroundColor: settings.primaryColor },
-            ]}
-          ></View>
-        </View>
-        <Text style={[styles.label]}>Cor secundária</Text>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => handleModalView(2)}
-          >
-            <Text style={[styles.btnText]}>Selecionar</Text>
-          </TouchableOpacity>
-          <View
-            style={[
-              styles.colorContainer,
-              { backgroundColor: settings.secondaryColor },
-            ]}
-          ></View>
-        </View>
-        <Text style={[styles.label]}>Texto principal</Text>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => handleModalView(3)}
-          >
-            <Text style={[styles.btnText]}>Selecionar</Text>
-          </TouchableOpacity>
-          <View
-            style={[
-              styles.colorContainer,
-              { backgroundColor: settings.primaryText },
-            ]}
-          ></View>
-        </View>
-        <Text style={[styles.label]}>Texto secundário</Text>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => handleModalView(4)}
-          >
-            <Text style={[styles.btnText]}>Selecionar</Text>
-          </TouchableOpacity>
-          <View
-            style={[
-              styles.colorContainer,
-              { backgroundColor: settings.secondaryText },
-            ]}
-          ></View>
-        </View>
-        <Text style={[styles.label]}>Cor do card</Text>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => handleModalView(5)}
-          >
-            <Text style={[styles.btnText]}>Selecionar</Text>
-          </TouchableOpacity>
-          <View
-            style={[
-              styles.colorContainer,
-              { backgroundColor: settings.cardColor },
-            ]}
-          ></View>
-        </View>
-        <Text style={[styles.label]}>Título do card</Text>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => handleModalView(6)}
-          >
-            <Text style={[styles.btnText]}>Selecionar</Text>
-          </TouchableOpacity>
-          <View
-            style={[
-              styles.colorContainer,
-              { backgroundColor: settings.cardTitleColor },
-            ]}
-          ></View>
-        </View>
-        <Text style={[styles.label]}>Conteúdo do card</Text>
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => handleModalView(7)}
-          >
-            <Text style={[styles.btnText]}>Selecionar</Text>
-          </TouchableOpacity>
-          <View
-            style={[
-              styles.colorContainer,
-              { backgroundColor: settings.cardContentColor },
-            ]}
-          ></View>
+        <View style={styles.settingsGrid}>
+          <View style={styles.colorsContainer}>
+            <Text style={[styles.label]}>Cor principal</Text>
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => handleModalView(1)}
+              >
+                <Text style={[styles.btnText]}>Selecionar</Text>
+              </TouchableOpacity>
+              <View
+                style={[
+                  styles.colorContainer,
+                  { backgroundColor: settings.primaryColor },
+                ]}
+              ></View>
+            </View>
+            <Text style={[styles.label]}>Cor secundária</Text>
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => handleModalView(2)}
+              >
+                <Text style={[styles.btnText]}>Selecionar</Text>
+              </TouchableOpacity>
+              <View
+                style={[
+                  styles.colorContainer,
+                  { backgroundColor: settings.secondaryColor },
+                ]}
+              ></View>
+            </View>
+            <Text style={[styles.label]}>Texto principal</Text>
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => handleModalView(3)}
+              >
+                <Text style={[styles.btnText]}>Selecionar</Text>
+              </TouchableOpacity>
+              <View
+                style={[
+                  styles.colorContainer,
+                  { backgroundColor: settings.primaryText },
+                ]}
+              ></View>
+            </View>
+            <Text style={[styles.label]}>Texto secundário</Text>
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => handleModalView(4)}
+              >
+                <Text style={[styles.btnText]}>Selecionar</Text>
+              </TouchableOpacity>
+              <View
+                style={[
+                  styles.colorContainer,
+                  { backgroundColor: settings.secondaryText },
+                ]}
+              ></View>
+            </View>
+            <Text style={[styles.label]}>Cor do card</Text>
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => handleModalView(5)}
+              >
+                <Text style={[styles.btnText]}>Selecionar</Text>
+              </TouchableOpacity>
+              <View
+                style={[
+                  styles.colorContainer,
+                  { backgroundColor: settings.cardColor },
+                ]}
+              ></View>
+            </View>
+            <Text style={[styles.label]}>Título do card</Text>
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => handleModalView(6)}
+              >
+                <Text style={[styles.btnText]}>Selecionar</Text>
+              </TouchableOpacity>
+              <View
+                style={[
+                  styles.colorContainer,
+                  { backgroundColor: settings.cardTitleColor },
+                ]}
+              ></View>
+            </View>
+            <Text style={[styles.label]}>Conteúdo do card</Text>
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => handleModalView(7)}
+              >
+                <Text style={[styles.btnText]}>Selecionar</Text>
+              </TouchableOpacity>
+              <View
+                style={[
+                  styles.colorContainer,
+                  { backgroundColor: settings.cardContentColor },
+                ]}
+              ></View>
+            </View>
+          </View>
+          <View style={styles.numbersContainer}>
+            <Text style={[styles.label]}>Borda do card</Text>
+            <TextInput
+              style={styles.optionInput}
+              keyboardType="number-pad"
+              value={String(settings.cardRadius)}
+              onChangeText={(text) => {
+                setOption(1);
+                handleInputsChange(text);
+              }}
+            />
+          </View>
         </View>
         <View style={styles.screensContainer}>
           <View
@@ -462,6 +481,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   btn: {
+    height: 34,
     backgroundColor: "#7ec0ee",
     alignSelf: "baseline",
     justifyContent: "center",
@@ -482,9 +502,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   colorContainer: {
+    alignSelf: "flex-start",
     backgroundColor: "#f00",
-    height: 30,
-    width: 30,
+    height: 34,
+    width: 34,
     marginBottom: 10,
     marginLeft: 10,
     elevation: 5,
@@ -592,5 +613,15 @@ const styles = StyleSheet.create({
   exampleBtnText: {
     fontSize: 12,
     fontWeight: "bold",
+  },
+  settingsGrid: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  optionInput: {
+    height: 34,
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: "#7ec0ee",
   },
 });

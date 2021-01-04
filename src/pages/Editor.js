@@ -17,7 +17,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Editor() {
   const [memos, setMemos] = useState([]);
-  const [settings, setSettings] = useState([]);
+  const [settings, setSettings] = useState({});
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -71,7 +71,13 @@ export default function Editor() {
       </View>
       <View style={styles.content}>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              borderTopLeftRadius: settings.cardRadius,
+              borderTopRightRadius: settings.cardRadius,
+            },
+          ]}
           autoCapitalize="words"
           autoCorrect={false}
           placeholder="Título"
@@ -86,7 +92,13 @@ export default function Editor() {
           }}
         />
         <TextInput
-          style={styles.longInput}
+          style={[
+            styles.longInput,
+            {
+              borderBottomLeftRadius: settings.cardRadius,
+              borderBottomRightRadius: settings.cardRadius,
+            },
+          ]}
           autoCapitalize="sentences"
           autoCorrect={false}
           placeholder="Mensagem"
@@ -140,16 +152,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 5,
     backgroundColor: "#fff",
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
     color: "#777",
   },
   longInput: {
     alignSelf: "stretch",
     padding: 5,
     backgroundColor: "#fff",
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
     color: "#777",
   },
   btn: {

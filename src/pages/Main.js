@@ -131,7 +131,13 @@ export default function Main() {
               onLongPress={() => handleOptions(index)}
             >
               <RectButton
-                style={[styles.card, { backgroundColor: settings.cardColor }]}
+                style={[
+                  styles.card,
+                  {
+                    backgroundColor: settings.cardColor,
+                    borderRadius: settings.cardRadius,
+                  },
+                ]}
               >
                 <Text
                   style={[styles.cardTitle, { color: settings.cardTitleColor }]}
@@ -190,7 +196,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginHorizontal: 20,
     padding: 30,
-    borderRadius: 5,
     elevation: 2,
     marginBottom: 5,
   },

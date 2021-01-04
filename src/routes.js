@@ -22,8 +22,41 @@ export default function Routes() {
       let settings = await AsyncStorage.getItem("mymemos@settings");
 
       if (settings) {
+        settings = JSON.parse(settings);
+        const addedProps = {
+          cardRadius: 5,
+        };
+
+        for (let prop in addedProps) {
+          if (!settings[prop] && settings[prop] !== 0) {
+            settings[prop] = addedProps[prop];
+          }
+        }
+
+        await AsyncStorage.setItem(
+          "mymemos@settings",
+          JSON.stringify(settings)
+        );
         setHasSettings(true);
+      } else {
+        settings = {
+          primaryColor: "#7ec0ee",
+          secondaryColor: "#F2F2F2",
+          primaryText: "#7ec0ee",
+          secondaryText: "#ffffff",
+          cardColor: "#fff",
+          cardTitleColor: "#777",
+          cardContentColor: "#777",
+          buttonColor: "#4bb543",
+          cardRadius: 5,
+        };
+
+        await AsyncStorage.setItem(
+          "mymemos@settings",
+          JSON.stringify(settings)
+        );
       }
+
       setIsLoaded(true);
     }
 
@@ -39,6 +72,10 @@ export default function Routes() {
       handleSplashHiding();
     }
   }, [isLoaded]);
+
+  if (!isLoaded) {
+    return <></>;
+  }
 
   return (
     <NavigationContainer>
