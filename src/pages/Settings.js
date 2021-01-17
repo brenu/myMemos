@@ -124,9 +124,9 @@ export default function Settings() {
   function handleInputsChange(text) {
     switch (option) {
       case 1:
-        setSettings(() => ({
+        setSettings((settings) => ({
           ...settings,
-          cardRadius: text.replace(/[^0-9]/g, ""),
+          cardRadius: Number(text.replace(/[^0-9]/g, "")),
         }));
         break;
       default:
@@ -160,294 +160,296 @@ export default function Settings() {
   });
 
   return (
-    <View style={[styles.container]}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleGoBackButton}>
           <FontAwesome5 name="arrow-left" size={25} color="#7ec0ee" />
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.content}>
-        <Text style={[styles.title]}>Configurações</Text>
-        <View style={styles.settingsGrid}>
-          <View style={styles.colorsContainer}>
-            <Text style={[styles.label]}>Cor principal</Text>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => handleModalView(1)}
-              >
-                <Text style={[styles.btnText]}>Selecionar</Text>
-              </TouchableOpacity>
-              <View
-                style={[
-                  styles.colorContainer,
-                  { backgroundColor: settings.primaryColor },
-                ]}
-              ></View>
+      {settings !== {} && (
+        <ScrollView style={styles.content}>
+          <Text style={[styles.title]}>Configurações</Text>
+          <View style={styles.settingsGrid}>
+            <View style={styles.colorsContainer}>
+              <Text style={[styles.label]}>Cor principal</Text>
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleModalView(1)}
+                >
+                  <Text style={[styles.btnText]}>Selecionar</Text>
+                </TouchableOpacity>
+                <View
+                  style={[
+                    styles.colorContainer,
+                    { backgroundColor: settings.primaryColor },
+                  ]}
+                ></View>
+              </View>
+              <Text style={[styles.label]}>Cor secundária</Text>
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleModalView(2)}
+                >
+                  <Text style={[styles.btnText]}>Selecionar</Text>
+                </TouchableOpacity>
+                <View
+                  style={[
+                    styles.colorContainer,
+                    { backgroundColor: settings.secondaryColor },
+                  ]}
+                ></View>
+              </View>
+              <Text style={[styles.label]}>Texto principal</Text>
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleModalView(3)}
+                >
+                  <Text style={[styles.btnText]}>Selecionar</Text>
+                </TouchableOpacity>
+                <View
+                  style={[
+                    styles.colorContainer,
+                    { backgroundColor: settings.primaryText },
+                  ]}
+                ></View>
+              </View>
+              <Text style={[styles.label]}>Texto secundário</Text>
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleModalView(4)}
+                >
+                  <Text style={[styles.btnText]}>Selecionar</Text>
+                </TouchableOpacity>
+                <View
+                  style={[
+                    styles.colorContainer,
+                    { backgroundColor: settings.secondaryText },
+                  ]}
+                ></View>
+              </View>
+              <Text style={[styles.label]}>Cor do card</Text>
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleModalView(5)}
+                >
+                  <Text style={[styles.btnText]}>Selecionar</Text>
+                </TouchableOpacity>
+                <View
+                  style={[
+                    styles.colorContainer,
+                    { backgroundColor: settings.cardColor },
+                  ]}
+                ></View>
+              </View>
+              <Text style={[styles.label]}>Título do card</Text>
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleModalView(6)}
+                >
+                  <Text style={[styles.btnText]}>Selecionar</Text>
+                </TouchableOpacity>
+                <View
+                  style={[
+                    styles.colorContainer,
+                    { backgroundColor: settings.cardTitleColor },
+                  ]}
+                ></View>
+              </View>
+              <Text style={[styles.label]}>Conteúdo do card</Text>
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleModalView(7)}
+                >
+                  <Text style={[styles.btnText]}>Selecionar</Text>
+                </TouchableOpacity>
+                <View
+                  style={[
+                    styles.colorContainer,
+                    { backgroundColor: settings.cardContentColor },
+                  ]}
+                ></View>
+              </View>
             </View>
-            <Text style={[styles.label]}>Cor secundária</Text>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => handleModalView(2)}
-              >
-                <Text style={[styles.btnText]}>Selecionar</Text>
-              </TouchableOpacity>
-              <View
-                style={[
-                  styles.colorContainer,
-                  { backgroundColor: settings.secondaryColor },
-                ]}
-              ></View>
-            </View>
-            <Text style={[styles.label]}>Texto principal</Text>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => handleModalView(3)}
-              >
-                <Text style={[styles.btnText]}>Selecionar</Text>
-              </TouchableOpacity>
-              <View
-                style={[
-                  styles.colorContainer,
-                  { backgroundColor: settings.primaryText },
-                ]}
-              ></View>
-            </View>
-            <Text style={[styles.label]}>Texto secundário</Text>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => handleModalView(4)}
-              >
-                <Text style={[styles.btnText]}>Selecionar</Text>
-              </TouchableOpacity>
-              <View
-                style={[
-                  styles.colorContainer,
-                  { backgroundColor: settings.secondaryText },
-                ]}
-              ></View>
-            </View>
-            <Text style={[styles.label]}>Cor do card</Text>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => handleModalView(5)}
-              >
-                <Text style={[styles.btnText]}>Selecionar</Text>
-              </TouchableOpacity>
-              <View
-                style={[
-                  styles.colorContainer,
-                  { backgroundColor: settings.cardColor },
-                ]}
-              ></View>
-            </View>
-            <Text style={[styles.label]}>Título do card</Text>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => handleModalView(6)}
-              >
-                <Text style={[styles.btnText]}>Selecionar</Text>
-              </TouchableOpacity>
-              <View
-                style={[
-                  styles.colorContainer,
-                  { backgroundColor: settings.cardTitleColor },
-                ]}
-              ></View>
-            </View>
-            <Text style={[styles.label]}>Conteúdo do card</Text>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => handleModalView(7)}
-              >
-                <Text style={[styles.btnText]}>Selecionar</Text>
-              </TouchableOpacity>
-              <View
-                style={[
-                  styles.colorContainer,
-                  { backgroundColor: settings.cardContentColor },
-                ]}
-              ></View>
-            </View>
-          </View>
-          <View style={styles.numbersContainer}>
-            <Text style={[styles.label]}>Borda do card</Text>
-            <TextInput
-              style={styles.optionInput}
-              keyboardType="number-pad"
-              value={String(settings.cardRadius)}
-              onChangeText={(text) => {
-                setOption(1);
-                handleInputsChange(text);
-              }}
-            />
-          </View>
-        </View>
-        <View style={styles.screensContainer}>
-          <View
-            style={[
-              styles.screenContainer,
-              { backgroundColor: settings.primaryColor },
-            ]}
-          >
-            <View style={[styles.exampleHeader]}>
-              <FontAwesome5
-                name="cog"
-                size={25}
-                color={settings.secondaryText}
+            <View style={styles.numbersContainer}>
+              <Text style={[styles.label]}>Borda do card</Text>
+              <TextInput
+                style={styles.optionInput}
+                keyboardType="number-pad"
+                value={String(settings.cardRadius)}
+                onChangeText={(text) => {
+                  setOption(1);
+                  handleInputsChange(text);
+                }}
               />
+            </View>
+          </View>
+          <View style={styles.screensContainer}>
+            <View
+              style={[
+                styles.screenContainer,
+                { backgroundColor: settings.primaryColor },
+              ]}
+            >
+              <View style={[styles.exampleHeader]}>
+                <FontAwesome5
+                  name="cog"
+                  size={25}
+                  color={settings.secondaryText}
+                />
 
-              <FontAwesome5
-                name="plus"
-                size={25}
-                color={settings.secondaryText}
-              />
+                <FontAwesome5
+                  name="plus"
+                  size={25}
+                  color={settings.secondaryText}
+                />
+              </View>
+              <View
+                style={[
+                  styles.card,
+                  {
+                    backgroundColor: settings.cardColor,
+                    borderRadius: settings.cardRadius,
+                  },
+                ]}
+              >
+                <Text
+                  style={[styles.cardTitle, { color: settings.cardTitleColor }]}
+                >
+                  Test title
+                </Text>
+                <Text
+                  style={[
+                    styles.cardContent,
+                    { color: settings.cardContentColor },
+                  ]}
+                >
+                  Sample description
+                </Text>
+              </View>
             </View>
             <View
               style={[
-                styles.card,
-                {
-                  backgroundColor: settings.cardColor,
-                  borderRadius: Number(settings.cardRadius),
-                },
+                styles.screenContainer,
+                { backgroundColor: settings.secondaryColor },
               ]}
             >
-              <Text
-                style={[styles.cardTitle, { color: settings.cardTitleColor }]}
-              >
-                Test title
-              </Text>
-              <Text
-                style={[
-                  styles.cardContent,
-                  { color: settings.cardContentColor },
-                ]}
-              >
-                Sample description
-              </Text>
-            </View>
-          </View>
-          <View
-            style={[
-              styles.screenContainer,
-              { backgroundColor: settings.secondaryColor },
-            ]}
-          >
-            <View style={styles.exampleHeader}>
-              <FontAwesome5
-                name="arrow-left"
-                size={25}
-                color={settings.primaryText}
-              />
-            </View>
-            <View style={styles.exampleContent}>
-              <View
-                style={[
-                  styles.exampleInput,
-                  {
-                    borderTopLeftRadius: Number(settings.cardRadius),
-                    borderTopRightRadius: Number(settings.cardRadius),
-                  },
-                ]}
-              >
-                <Text style={styles.inputText}>Example</Text>
-              </View>
-              <View
-                style={[
-                  styles.exampleLongInput,
-                  {
-                    borderBottomLeftRadius: Number(settings.cardRadius),
-                    borderBottomRightRadius: Number(settings.cardRadius),
-                  },
-                ]}
-              >
-                <Text style={styles.inputText}>Blah blah</Text>
-              </View>
-              <View
-                style={[
-                  styles.exampleBtn,
-                  { backgroundColor: settings.primaryColor },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.exampleBtnText,
-                    { color: settings.secondaryText },
-                  ]}
-                >
-                  Criar Nota
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <Modal
-          animated={true}
-          animationType="slide"
-          visible={showModal}
-          transparent={true}
-        >
-          <View style={styles.modal}>
-            {!showRestartModal ? (
-              <View style={styles.modalCard}>
-                <Text style={styles.title}>
-                  Toque na cor resultante para selecionar
-                </Text>
-                <TriangleColorPicker
-                  color={color}
-                  onColorChange={setColor}
-                  onColorSelected={handleSettingsChange}
-                  style={{ flex: 1 }}
+              <View style={styles.exampleHeader}>
+                <FontAwesome5
+                  name="arrow-left"
+                  size={25}
+                  color={settings.primaryText}
                 />
               </View>
-            ) : (
-              <View style={[styles.modalCard, { flex: 0.2 }]}>
-                <Text
-                  style={{ fontSize: 18, color: "#777", textAlign: "center" }}
+              <View style={styles.exampleContent}>
+                <View
+                  style={[
+                    styles.exampleInput,
+                    {
+                      borderTopLeftRadius: settings.cardRadius,
+                      borderTopRightRadius: settings.cardRadius,
+                    },
+                  ]}
                 >
-                  Será necessário reiniciar o aplicativo, tem certeza?
-                </Text>
-                <View style={styles.confirmContainer}>
-                  <TouchableOpacity
-                    style={styles.cancelBtn}
-                    onPress={handleCancel}
+                  <Text style={styles.inputText}>Example</Text>
+                </View>
+                <View
+                  style={[
+                    styles.exampleLongInput,
+                    {
+                      borderBottomLeftRadius: settings.cardRadius,
+                      borderBottomRightRadius: settings.cardRadius,
+                    },
+                  ]}
+                >
+                  <Text style={styles.inputText}>Blah blah</Text>
+                </View>
+                <View
+                  style={[
+                    styles.exampleBtn,
+                    { backgroundColor: settings.primaryColor },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.exampleBtnText,
+                      { color: settings.secondaryText },
+                    ]}
                   >
-                    <Text
-                      style={{
-                        color: "#fff",
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      Não
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.confirmBtn}
-                    onPress={handleRestart}
-                  >
-                    <Text
-                      style={{
-                        color: "#fff",
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      Sim
-                    </Text>
-                  </TouchableOpacity>
+                    Criar Nota
+                  </Text>
                 </View>
               </View>
-            )}
+            </View>
           </View>
-        </Modal>
-      </ScrollView>
+          <Modal
+            animated={true}
+            animationType="slide"
+            visible={showModal}
+            transparent={true}
+          >
+            <View style={styles.modal}>
+              {!showRestartModal ? (
+                <View style={styles.modalCard}>
+                  <Text style={styles.title}>
+                    Toque na cor resultante para selecionar
+                  </Text>
+                  <TriangleColorPicker
+                    color={color}
+                    onColorChange={setColor}
+                    onColorSelected={handleSettingsChange}
+                    style={{ flex: 1 }}
+                  />
+                </View>
+              ) : (
+                <View style={[styles.modalCard, { flex: 0.2 }]}>
+                  <Text
+                    style={{ fontSize: 18, color: "#777", textAlign: "center" }}
+                  >
+                    Será necessário reiniciar o aplicativo, tem certeza?
+                  </Text>
+                  <View style={styles.confirmContainer}>
+                    <TouchableOpacity
+                      style={styles.cancelBtn}
+                      onPress={handleCancel}
+                    >
+                      <Text
+                        style={{
+                          color: "#fff",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Não
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.confirmBtn}
+                      onPress={handleRestart}
+                    >
+                      <Text
+                        style={{
+                          color: "#fff",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Sim
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+            </View>
+          </Modal>
+        </ScrollView>
+      )}
     </View>
   );
 }
@@ -607,16 +609,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 5,
     backgroundColor: "#fff",
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
     color: "#777",
   },
   exampleLongInput: {
     alignSelf: "stretch",
     padding: 5,
     backgroundColor: "#fff",
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
     color: "#777",
   },
   inputText: {
